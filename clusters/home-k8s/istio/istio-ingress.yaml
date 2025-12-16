@@ -1,43 +1,15 @@
 ---
-apiVersion: v1
-kind: Namespace
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
 metadata:
   name: istio-ingress
-  labels:
-    toolkit.fluxcd.io/tenant: ingress
----
-# helm upgrade -i istio-ingress istio/gateway -n istio-ingress --wait
-apiVersion: helm.toolkit.fluxcd.io/v2
-kind: HelmRelease
-metadata:
-  name: istio-ingress
-  namespace: istio-ingress
+  namespace: istio-system
 spec:
-  releaseName: gateway
-  interval: 60m
-  chart:
-    spec:
-      chart: gateway
-      version: "*"
-      sourceRef:
-        kind: HelmRepository
-        name: istio
-        namespace: istio-system
-      interval: 12h
-  values: {}
----
-apiVersion: networking.istio.io/v1
-kind: Gateway
-metadata:
-  name: k8s-gateway
-  namespace: istio-ingress
-spec:
-  selector:
-    app: gateway
-  servers:
-    - port:
-        number: 80
-        name: http
-        protocol: HTTP
-      hosts:
-        - "*.grp0.polecatworks.com"
+  dependsOn:
+    - apiVersion: helm.toolkit.fluxcd.io/v2
+      kind: HelmRelease
+      name: istio-base
+      namespace: istio-system
+  interval: 5m
+  path: ./ingress
+  prune: true
