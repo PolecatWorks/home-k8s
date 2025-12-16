@@ -5,6 +5,11 @@ metadata:
   name: istio-ingress
   namespace: istio-system
 spec:
+  sourceRef:
+    apiVersion: kustomize.toolkit.fluxcd.io/v1
+    kind: Kustomization
+    name: istio
+    namespace: istio-system
   dependsOn:
     - name: istio-base
       namespace: istio-system
