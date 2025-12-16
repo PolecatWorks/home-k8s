@@ -36,6 +36,6 @@ spec:
   values:
     metrics:
       serviceMonitor:
-        enabled: true
+        enabled: false
         additionalLabels:
           release: prometheus-stack
