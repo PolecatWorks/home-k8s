@@ -8,12 +8,7 @@
     --owner=polecatworks \
     --repository=home-k8s \
     --branch=main \
-    --path=./clusters/home-k8s \
-    --personal \
-    --user bengreen \
-    --token $FLUX_POLECATWORKS_GITHUB_TOKEN \
-    --components-extra image-reflector-controller,image-automation-controller
-
+    --path=./clusters/home-k8s
 
 
 # Ensure your have provided secrets for the helm repos you want to reference. Eg in flux-system
