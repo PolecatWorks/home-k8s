@@ -1,20 +1,20 @@
-# Notes on preparations
+# Flux setup and bootstrap
 
-Label the k8s node with the sonoff antenna so that we can use node affinity to attach home assistant to the same node
+   flux check --pre
 
-  kubectl label nodes k8s101.k8s app=sonoff-controller
+  export GITHUB_USER=bengreen
 
-Then use affinity
+   flux bootstrap github \
+    --owner=polecatworks \
+    --repository=home-k8s \
+    --branch=main \
+    --path=./clusters/home-k8s \
+    --personal \
+    --user bengreen \
+    --token $FLUX_POLECATWORKS_GITHUB_TOKEN \
+    --components-extra image-reflector-controller,image-automation-controller
 
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: app
-            operator: In
-            values:
-            - sonoff-controller
+
 
 # Ensure your have provided secrets for the helm repos you want to reference. Eg in flux-system
 
@@ -29,3 +29,10 @@ Or via a single command line
     kubectl create secret docker-registry polecatworks-clasic --docker-server=ghcr.io --docker-username=<USERNAME> --docker-password=${GHCR_TOKEN}
 
     kubectl create secret generic bproxy0-bucket-proxy --from-literal=access_key_id=<KEYID> --from-literal=secret_key=<SECRET>
+
+
+# Sort out PG Poolusers
+
+PG_PASSWD_KEYCLOAK=$(kubectl -n security get secrets keycloak-postgresql -o jsonpath="{.data.DB_PASS}" | base64 -d)
+PG_PASSWD_LOG4HAM=$(kubectl -n log4ham get secrets log4ham-pg -o jsonpath="{.data.DB_PASS}" | base64 -d)
+PG_PASSWD_DEV=$(kubectl -n dev get secrets example-postgres-db-credentials -o jsonpath="{.data.DB_PASS}" | base64 -d)

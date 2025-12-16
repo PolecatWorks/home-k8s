@@ -21,7 +21,11 @@ spec:
       replicaCount: 2
       adminPassword: mypw
       customUsersSecret: poolusers
-      # kubectl -n dbs create secret generic poolusers --from-literal=usernames=security-pg-keycloak,dev-postgres-for-my-app,log4ham-pg-log4ham --from-literal=passwords=mypw
+      # PG_PASSWD_KEYCLOAK=$(kubectl -n security get secrets keycloak-postgresql -o jsonpath="{.data.DB_PASS}" | base64 -d)
+      # PG_PASSWD_DEV=$(kubectl -n dev get secrets example-postgres-db-credentials -o jsonpath="{.data.DB_PASS}" | base64 -d)
+      # PG_PASSWD_LOG4HAM=$(kubectl -n log4ham get secrets log4ham-pg -o jsonpath="{.data.DB_PASS}" | base64 -d)
+
+      # kubectl -n dbs create secret generic poolusers --from-literal=usernames=security-pg-keycloak,dev-postgres-for-my-app,log4ham-pg-log4ham --from-literal=passwords=${PG_PASSWD_KEYCLOAK},${PG_PASSWD_DEV},${PG_PASSWD_LOG4HAM}
       # kubectl -n dbs rollout restart deployment postgresql-postgresql-ha-pgpool
     postgresql:
       # kubectl -n dbs create secret generic pg-access --from-literal=postgres-password=mypw --from-literal=password=mypw --from-literal=repmgr-password=reppw --from-literal=user=postgres --from-literal=pgadmin=pgadminpw

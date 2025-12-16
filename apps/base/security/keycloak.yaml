@@ -35,6 +35,9 @@ spec:
       database: security-pg-keycloak
       port: 5432
       existingSecret: keycloak-postgresql
+# Once the Keycloak is up and running, you can create an admin user called realmadmin with password realmadminpw
+# AND place the credentials in the secret keycloak-admin in teh keycloak-operator namespace
+# kubectl  -n keycloak-operator create secret generic keycloak-admin --from-literal username=realmadmin --from-literal password=realmadminpw
 ---
 apiVersion: v1
 kind: Secret
