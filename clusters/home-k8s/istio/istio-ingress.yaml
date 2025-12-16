@@ -11,8 +11,8 @@ spec:
     name: flux-system
     namespace: flux-system
   dependsOn:
-    - name: istio-base
+    - name: istio-system
       namespace: istio-system
   interval: 5m
-  path: ./ingress
+  path: ./clusters/home-k8s/ingress
   prune: true
