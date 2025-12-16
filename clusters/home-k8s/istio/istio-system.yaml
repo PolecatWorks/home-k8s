@@ -12,5 +12,5 @@ spec:
     name: flux-system
     namespace: flux-system
   interval: 5m
-  path: ./clusters/home-k8s/system
+  path: ./clusters/home-k8s/istio/system
   prune: true

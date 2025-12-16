@@ -14,5 +14,5 @@ spec:
   dependsOn:
     - name: istio-system
   interval: 5m
-  path: ./clusters/home-k8s/ingress
+  path: ./clusters/home-k8s/istio/ingress
   prune: true
