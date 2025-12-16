@@ -6,17 +6,17 @@ metadata:
   labels:
     toolkit.fluxcd.io/tenant: ingress
 ---
-apiVersion: source.toolkit.fluxcd.io/v1beta2
+apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
   name: istio
-  namespace: flux-system
+  namespace: istio-system
 spec:
   interval: 60m
   url: https://istio-release.storage.googleapis.com/charts
 ---
 # helm upgrade -i istio-base istio/base -n istio-system
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: istio-base
@@ -31,12 +31,12 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: istio
-        namespace: flux-system
+        namespace: istio-system
       interval: 12h
   values: {}
 ---
 # helm upgrade -i istiod istio/istiod -n istio-system --wait -f /tmp/istio-values.yaml
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: istiod
@@ -51,7 +51,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: istio
-        namespace: flux-system
+        namespace: istio-system
       interval: 12h
   values: {}
     # meshConfig:
