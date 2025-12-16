@@ -29,7 +29,7 @@ spec:
 apiVersion: networking.istio.io/v1
 kind: Gateway
 metadata:
-  name: k8s-gateway
+  name: polecatworks-gateway
   namespace: istio-ingress
 spec:
   selector:
@@ -41,3 +41,19 @@ spec:
         protocol: HTTP
       hosts:
         - "*.homek8s.polecatworks.com"
+---
+apiVersion: networking.istio.io/v1
+kind: Gateway
+metadata:
+  name: k8s-gateway
+  namespace: istio-ingress
+spec:
+  selector:
+    app: gateway
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*.k8s"
