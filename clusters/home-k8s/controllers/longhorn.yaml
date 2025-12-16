@@ -1,0 +1,36 @@
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: longhorn-single
+provisioner: driver.longhorn.io
+allowVolumeExpansion: true
+parameters:
+  numberOfReplicas: "1"
+  #   dataEngine: v1
+  #   dataLocality: disabled
+  #   disableRevisionCounter: "true"
+  #   fromBackup: ""
+  #   fsType: ext4
+  #   staleReplicaTimeout: "30"
+  #   unmapMarkSnapChainRemoved: ignored
+  # reclaimPolicy: Delete
+  # volumeBindingMode: Immediate
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: longhorn
+  namespace: longhorn-system
+spec:
+  hosts:
+  - longhorn.k8s
+  gateways:
+  - istio-ingress/k8s-gateway
+  - mesh # applies to all the sidecars in the mesh
+  http:
+  - route:
+    - destination:
+        host: longhorn-frontend.longhorn-system.svc.cluster.local
+        port:
+          number: 80
