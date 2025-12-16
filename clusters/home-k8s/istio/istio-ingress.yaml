@@ -6,10 +6,10 @@ metadata:
   namespace: istio-system
 spec:
   sourceRef:
-    apiVersion: kustomize.toolkit.fluxcd.io/v1
-    kind: Kustomization
-    name: istio
-    namespace: istio-system
+    apiVersion: source.toolkit.fluxcd.io/v1
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
   dependsOn:
     - name: istio-base
       namespace: istio-system
