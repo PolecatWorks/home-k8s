@@ -31,6 +31,7 @@ metadata:
 spec:
   interval: 10m0s
   path: ./fluxcd-dev
+  targetNamespace: service-capture
   prune: true
   sourceRef:
     kind: GitRepository
