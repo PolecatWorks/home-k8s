@@ -1,0 +1,72 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dbs
+  labels:
+    toolkit.fluxcd.io/tenant: dbs
+    istio-injection: disabled
+---
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: ccnpg-db0-postgres
+  namespace: dbs
+spec:
+  refreshInterval: 1h
+  target:
+    name: cnpg-db0-postgres
+    creationPolicy: Owner
+  data:
+    - secretKey: username
+      generate:
+        string:
+          length: 10
+          characterSet: alphanumeric
+    - secretKey: password
+      generate:
+        password:
+          length: 32
+          includeSymbols: true
+          includeUppercase: true
+          includeLowercase: true
+          includeNumbers: true
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: cnpg-db0
+  namespace: dbs
+spec:
+  releaseName: cnpg-db0
+  chart:
+    spec:
+      chart: cluster
+      sourceRef:
+        kind: HelmRepository
+        name: cnpg
+  interval: 50m
+  values:
+    cluster:
+      roles:
+        - name: db0_keycloak
+          ensure: present
+          comment: Keycloak DB owner
+          login: true
+          superuser: false
+          inRoles: []
+            # - pg_monitor
+            # - pg_signal_backend
+# ---
+# apiVersion: kinda.rocks/v1beta1
+# kind: DbInstance
+# metadata:
+#   name: cnpg-db0
+# spec:
+#   adminSecretRef:
+#     Name: cnpg-db0-cluster-superuser
+#     Namespace: dbs
+#   engine: postgres
+#   generic:
+#     host: "cnpg-db0-cluster-rw.dbs.svc.cluster.local"
+#     port: 5432
