@@ -45,6 +45,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: cnpg
+        namespce: cnpg-operator
   interval: 50m
   values:
     cluster:
