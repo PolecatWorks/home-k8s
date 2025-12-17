@@ -6,7 +6,7 @@ metadata:
   labels:
     toolkit.fluxcd.io/tenant: dbs
     istio-injection: disabled
----
+# ---
 # apiVersion: external-secrets.io/v1beta1
 # kind: ExternalSecret
 # metadata:
