@@ -32,4 +32,6 @@ spec:
   interval: 50m
   values:
     config:
-      clusterWide: false
+      clusterWide: true
+      data:
+        WATCH_NAMESPACE: dbs
