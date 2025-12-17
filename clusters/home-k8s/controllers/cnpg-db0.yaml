@@ -7,30 +7,30 @@ metadata:
     toolkit.fluxcd.io/tenant: dbs
     istio-injection: disabled
 ---
-apiVersion: external-secrets.io/v1beta1
-kind: ExternalSecret
-metadata:
-  name: ccnpg-db0-postgres
-  namespace: dbs
-spec:
-  refreshInterval: 1h
-  target:
-    name: cnpg-db0-postgres
-    creationPolicy: Owner
-  data:
-    - secretKey: username
-      generate:
-        string:
-          length: 10
-          characterSet: alphanumeric
-    - secretKey: password
-      generate:
-        password:
-          length: 32
-          includeSymbols: true
-          includeUppercase: true
-          includeLowercase: true
-          includeNumbers: true
+# apiVersion: external-secrets.io/v1beta1
+# kind: ExternalSecret
+# metadata:
+#   name: ccnpg-db0-postgres
+#   namespace: dbs
+# spec:
+#   refreshInterval: 1h
+#   target:
+#     name: cnpg-db0-postgres
+#     creationPolicy: Owner
+#   data:
+#     - secretKey: username
+#       generate:
+#         string:
+#           length: 10
+#           characterSet: alphanumeric
+#     - secretKey: password
+#       generate:
+#         password:
+#           length: 32
+#           includeSymbols: true
+#           includeUppercase: true
+#           includeLowercase: true
+#           includeNumbers: true
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
