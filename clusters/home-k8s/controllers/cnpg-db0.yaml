@@ -67,6 +67,8 @@ spec:
           comment: Keycloak DB owner
           login: true
           superuser: false
+          passwordSecret:
+            name: db0-keycloak-user
           inRoles: []
             # - pg_monitor
             # - pg_signal_backend
