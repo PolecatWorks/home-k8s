@@ -50,6 +50,18 @@ spec:
   values:
     cluster:
       roles:
+        # 1. The Schema Update User (Owner)
+        - name: schema_mgr
+          comment: Schema Manager to be used bymigration tools
+          ensure: present
+          login: true
+
+        # 2. The Application Service Account
+        - name: app_user
+          comment: Application Service Account
+          ensure: present
+          login: true
+
         - name: db0_keycloak
           ensure: present
           comment: Keycloak DB owner
@@ -58,6 +70,11 @@ spec:
           inRoles: []
             # - pg_monitor
             # - pg_signal_backend
+    databases:
+      - name: keycloak
+        owner: db0_keycloak
+
+
 # ---
 # apiVersion: kinda.rocks/v1beta1
 # kind: DbInstance
