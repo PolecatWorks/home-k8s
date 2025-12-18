@@ -1,16 +1,16 @@
 ---
-apiVersion: postgresql.cnpg.io/v1
-kind: Database
-metadata:
-  name: db0-keycloak
-  namespace: dbs
-spec:
-  cluster:
-    name: cnpg-db0-cluster
-  name: db0-keycloak
-  owner: db0_keycloak
-  connectionLimit: 10
----
+# apiVersion: postgresql.cnpg.io/v1
+# kind: Database
+# metadata:
+#   name: db0-keycloak
+#   namespace: dbs
+# spec:
+#   cluster:
+#     name: cnpg-db0-cluster
+#   name: db0-keycloak
+#   owner: db0_keycloak
+#   connectionLimit: 10
+# ---
 apiVersion: generators.external-secrets.io/v1alpha1
 kind: Password
 metadata:
