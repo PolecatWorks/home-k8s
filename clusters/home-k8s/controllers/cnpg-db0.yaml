@@ -53,7 +53,7 @@ spec:
     name: db0-keycloak-user
     template:
       data:
-        username: keycloak
+        username: db0_keycloak
         password: "{{ .password }}"
   dataFrom:
     - sourceRef:
