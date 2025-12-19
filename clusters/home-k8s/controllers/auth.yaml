@@ -55,7 +55,7 @@ spec:
   releaseName: keycloak
   chart:
     spec:
-      chart: keycloak
+      chart: keycloakx
       sourceRef:
         kind: HelmRepository
         name: codecentric
@@ -64,27 +64,10 @@ spec:
     remediation:
       retries: 3
   values:
-    postgresql:
-      enabled: false
-    image:
-      repository: ghcr.io/codecentric/keycloak
-      tag: 26.4.7
-    extraEnv: |
-      - name: DB_VENDOR
-        value: postgres
-      - name: DB_ADDR
-        value: cnpg-db0-cluster-rw.dbs.svc.cluster.local
-      - name: DB_PORT
-        value: "5432"
-      - name: DB_DATABASE
-        value: keycloak
-
-    extraEnvFrom: |
-      - secretRef:
-          name: '{{ include "keycloak.fullname" . }}-db'
-
-    secrets:
-      db:
-        stringData:
-          DB_USER: '{{ .Values.username }}'
-          DB_PASSWORD: '{{ .Values.password }}'
+    database:
+      vendor: postgres
+      hostname: cnpg-db0-cluster-rw.dbs.svc.cluster.local
+      port: 5432
+      database: keycloak
+      existingSecret: db0-keycloak-user
+      existingSecreetKey: password
