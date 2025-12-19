@@ -66,6 +66,9 @@ spec:
   values:
     postgresql:
       enabled: false
+    image:
+      repository: ghcr.io/codecentric/keycloak
+      tag: 26.4.7
     extraEnv: |
       - name: DB_VENDOR
         value: postgres
