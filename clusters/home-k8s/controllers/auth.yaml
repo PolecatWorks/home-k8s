@@ -63,4 +63,25 @@ spec:
   install:
     remediation:
       retries: 3
-  values: {}
+  values:
+    postgresql:
+      enabled: false
+    extraEnv: |
+      - name: DB_VENDOR
+        value: postgres
+      - name: DB_ADDR
+        value: cnpg-db0-cluster-rw.dbs.svc.cluster.local
+      - name: DB_PORT
+        value: "5432"
+      - name: DB_DATABASE
+        value: keycloak
+
+    extraEnvFrom: |
+      - secretRef:
+          name: '{{ include "keycloak.fullname" . }}-db'
+
+    secrets:
+      db:
+        stringData:
+          DB_USER: '{{ .Values.username }}'
+          DB_PASSWORD: '{{ .Values.password }}'
