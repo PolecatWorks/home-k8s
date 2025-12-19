@@ -1,16 +1,11 @@
 ---
-# apiVersion: postgresql.cnpg.io/v1
-# kind: Database
-# metadata:
-#   name: db0-keycloak
-#   namespace: dbs
-# spec:
-#   cluster:
-#     name: cnpg-db0-cluster
-#   name: db0-keycloak
-#   owner: db0_keycloak
-#   connectionLimit: 10
-# ---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: auth
+  labels:
+    toolkit.fluxcd.io/tenant: security
+---
 apiVersion: generators.external-secrets.io/v1alpha1
 kind: Password
 metadata:
@@ -39,3 +34,5 @@ spec:
           apiVersion: generators.external-secrets.io/v1alpha1
           kind: Password
           name: db0-keycloak-password
+# Copy db0-keycloak-user secret to auth namespace. Suggest in future to use ExternalSecret to push the secret to auth namespace
+---
