@@ -36,3 +36,31 @@ spec:
           name: db0-keycloak-password
 # Copy db0-keycloak-user secret to auth namespace. Suggest in future to use ExternalSecret to push the secret to auth namespace
 ---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: codecentric
+  namespace: auth
+spec:
+  interval: 69m
+  type: oci
+  url: oci://ghcr.io/codecentric/helm-charts
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: keycloak
+  namespace: auth
+spec:
+  releaseName: keycloak
+  chart:
+    spec:
+      chart: keycloak
+      sourceRef:
+        kind: HelmRepository
+        name: codecentric
+  interval: 50m
+  install:
+    remediation:
+      retries: 3
+  values: {}

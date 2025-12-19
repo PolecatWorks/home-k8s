@@ -1,0 +1,67 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: keycloak
+  namespace: auth
+spec:
+  releaseName: keycloak
+  timeout: 10m
+  chart:
+    spec:
+      chart: keycloak
+      sourceRef:
+        kind: HelmRepository
+        namespace: flux-system
+        name: bitnami
+  interval: 50m
+  install:
+    remediation:
+      retries: 3
+  values:
+    image:
+      tag: 26-debian-12
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+        labels:
+          release: prometheus-stack
+    httpRelativePath: /auth/
+    postgresql:
+      enabled: false
+    externalDatabase:
+      host: postgresql-postgresql-ha-pgpool.dbs.svc.cluster.local
+      user: security-pg-keycloak
+      database: security-pg-keycloak
+      port: 5432
+      existingSecret: keycloak-postgresql
+# Once the Keycloak is up and running, you can create an admin user called realmadmin with password realmadminpw
+# AND place the credentials in the secret keycloak-admin in teh keycloak-operator namespace
+# kubectl  -n keycloak-operator create secret generic keycloak-admin --from-literal username=realmadmin --from-literal password=realmadminpw
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name:  keycloak-admin
+type: Opaque
+data:
+  username: cmVhbG1hZG1pbg==   # base64-encoded value of "realmadmin"
+  password: cmVhbG1hZG1pbnB3   # base64-encoded value of "realmadminpw"
+---
+apiVersion: v1.edp.epam.com/v1alpha1
+kind: ClusterKeycloak
+metadata:
+  name: keycloak
+spec:
+  secret: keycloak-admin             # Secret name
+  url: http://keycloak.auth.svc.cluster.local/auth/   # Keycloak URL
+  # url: http://service-y.namespace-b.svc.cluster.local   # Keycloak URL
+---
+apiVersion: v1.edp.epam.com/v1alpha1
+kind: ClusterKeycloakRealm
+metadata:
+ name: master
+spec:
+ realmName: master
+ clusterKeycloakRef: keycloak
