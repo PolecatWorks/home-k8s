@@ -64,6 +64,8 @@ spec:
     remediation:
       retries: 3
   values:
+    dbchecker:
+      enabled: true
     database:
       vendor: postgres
       hostname: cnpg-db0-cluster-rw.dbs.svc.cluster.local
