@@ -6,37 +6,6 @@ metadata:
   labels:
     toolkit.fluxcd.io/tenant: security
 ---
-apiVersion: generators.external-secrets.io/v1alpha1
-kind: Password
-metadata:
-  name: db0-keycloak-password
-  namespace: dbs
-spec:
-  length: 64
-  symbols: 0
-  allowRepeat: true
----
-apiVersion: external-secrets.io/v1
-kind: ExternalSecret
-metadata:
-  name: db0-keycloak-user
-  namespace: dbs
-spec:
-  refreshInterval: 1h
-  target:
-    name: db0-keycloak-user
-    template:
-      data:
-        username: keycloak
-        password: "{{ .password }}"
-  dataFrom:
-    - sourceRef:
-        generatorRef:
-          apiVersion: generators.external-secrets.io/v1alpha1
-          kind: Password
-          name: db0-keycloak-password
-# Copy db0-keycloak-user secret to auth namespace. Suggest in future to use ExternalSecret to push the secret to auth namespace
----
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
