@@ -62,19 +62,19 @@ spec:
           ensure: present
           login: true
 
-        - name: db0_keycloak
-          ensure: present
-          comment: Keycloak DB owner
-          login: true
-          superuser: false
-          passwordSecret:
-            name: db0-keycloak-user
-          inRoles: []
-            # - pg_monitor
-            # - pg_signal_backend
-    databases:
-      - name: keycloak
-        owner: db0_keycloak
+    #     - name: db0_keycloak
+    #       ensure: present
+    #       comment: Keycloak DB owner
+    #       login: true
+    #       superuser: false
+    #       passwordSecret:
+    #         name: db0-keycloak-user
+    #       inRoles: []
+    #         # - pg_monitor
+    #         # - pg_signal_backend
+    # databases:
+    #   - name: keycloak
+    #     owner: db0_keycloak
 
 
 # ---
