@@ -41,6 +41,7 @@ spec:
       hostname: cnpg-db0-cluster-rw.dbs.svc.cluster.local
       port: 5432
       database: keycloak
+      username: db0_keycloak
       existingSecret: db0-keycloak-user
       existingSecretKey: password
 ---
@@ -56,7 +57,7 @@ spec:
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
-  name: keycloak-user
+  name: keycloak-admin-credentials
   namespace: auth
 spec:
   refreshInterval: 1h
