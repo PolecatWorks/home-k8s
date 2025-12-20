@@ -103,9 +103,9 @@ spec:
     #       inRoles: []
     #         # - pg_monitor
     #         # - pg_signal_backend
-    # databases:
-    #   - name: keycloak
-    #     owner: db0_keycloak
+    databases:
+      - name: keycloak
+        owner: db0_keycloak
 
 
 # ---
