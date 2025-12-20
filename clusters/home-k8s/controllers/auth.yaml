@@ -56,12 +56,12 @@ spec:
         valueFrom:
           secretKeyRef:
             name: {{ include "keycloak.fullname" . }}-admin-creds
-            key: keycloak-admin-username
+            key: username
       - name: KEYCLOAK_ADMIN_PASSWORD
         valueFrom:
           secretKeyRef:
             name: {{ include "keycloak.fullname" . }}-admin-creds
-            key: keycloak-admin-password
+            key: password
 ---
 apiVersion: generators.external-secrets.io/v1alpha1
 kind: Password
@@ -82,8 +82,8 @@ spec:
   target:
     template:
       data:
-        keycloak-admin-username: admin
-        keycloak-admin-password: "{{ .password }}"
+        username: admin
+        password: "{{ .password }}"
   dataFrom:
     - sourceRef:
         generatorRef:
