@@ -119,12 +119,22 @@ spec:
           superuser: false
           passwordSecret:
             name: db0-keycloak-user
+
+        - name: db0_service_cap
+          ensure: present
+          comment: Service Cap DB owner
+          login: true
+          superuser: false
+          passwordSecret:
+            name: db0-service-cap-user
     #       inRoles: []
     #         # - pg_monitor
     #         # - pg_signal_backend
     databases:
       - name: keycloak
         owner: db0_keycloak
+      - name: service_cap
+        owner: db0_service_cap
 
 
 # ---
