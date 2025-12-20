@@ -51,6 +51,17 @@ spec:
       username: db0_keycloak
       existingSecret: db0-keycloak-user
       existingSecretKey: password
+    extraEnv: |
+      - name: KEYCLOAK_ADMIN
+        valueFrom:
+          secretKeyRef:
+            name: {{ include "keycloak.fullname" . }}-admin-creds
+            key: user
+      - name: KEYCLOAK_ADMIN_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: {{ include "keycloak.fullname" . }}-admin-creds
+            key: password
 ---
 apiVersion: generators.external-secrets.io/v1alpha1
 kind: Password
@@ -64,14 +75,14 @@ spec:
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
-  name: keycloak-admin-credentials
+  name: keycloak-admin-creds
   namespace: auth
 spec:
   refreshInterval: 1h
   target:
     template:
       data:
-        keycloak-admin-username: keycloak
+        keycloak-admin-username: admin
         keycloak-admin-password: "{{ .password }}"
   dataFrom:
     - sourceRef:
