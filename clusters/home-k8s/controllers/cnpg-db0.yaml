@@ -226,7 +226,7 @@ rules:
 apiVersion: external-secrets.io/v1alpha1
 kind: PushSecret
 metadata:
-  name: example
+  name: push-db0-keycloak-user-to-auth-ns
   namespace: dbs
 spec:
   refreshInterval: 1h0m0s
