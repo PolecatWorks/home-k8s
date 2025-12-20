@@ -71,6 +71,8 @@ metadata:
 spec:
   length: 32
   symbols: 0
+  allowRepeat: true
+  noUpper: false
 ---
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
