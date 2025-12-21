@@ -92,3 +92,21 @@ spec:
           apiVersion: generators.external-secrets.io/v1alpha1
           kind: Password
           name: keycloak-password
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: keycloak
+  namespace: auth
+spec:
+  hosts:
+  - keycloak.k8s
+  gateways:
+  - istio-ingress/polecatworks-gateway
+  - mesh # applies to all the sidecars in the mesh
+  http:
+  - route:
+    - destination:
+        host: keycloak-keycloakx-http.auth.svc.cluster.local
+        port:
+          number: 80
