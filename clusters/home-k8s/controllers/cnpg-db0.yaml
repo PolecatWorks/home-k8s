@@ -23,10 +23,13 @@ metadata:
   name: db0-keycloak-user
   namespace: dbs
 spec:
-  refreshInterval: 1h
+  refreshInterval: 24h
   target:
     name: db0-keycloak-user
     template:
+      metadata:
+        labels:
+          cnpg.io/reload: "true"
       data:
         username: db0_keycloak
         password: "{{ .password }}"
@@ -43,9 +46,12 @@ metadata:
   name: db0-service-cap-user
   namespace: dbs
 spec:
-  refreshInterval: 1h
+  refreshInterval: 24h
   target:
     template:
+      metadata:
+        labels:
+          cnpg.io/reload: "true"
       data:
         username: db0_service_cap
         password: "{{ .password }}"
