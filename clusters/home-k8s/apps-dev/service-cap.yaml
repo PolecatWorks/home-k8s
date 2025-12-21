@@ -32,7 +32,9 @@ metadata:
   name: push-db0-service-cap-user-to-service-cap-ns
   namespace: dbs
 spec:
-  refreshInterval: 1h0m0s
+  # refreshInterval: 1h0m0s
+  updatePolicy: Replace # Pushes and overwrites immediately
+  deletionPolicy: Delete # Deletes from provider when PushSecret is gone
   secretStoreRefs:
     - name: k8s-store-service-cap-ns
       kind: SecretStore

@@ -174,7 +174,9 @@ metadata:
   name: push-db0-keycloak-user-to-auth-ns
   namespace: dbs
 spec:
-  refreshInterval: 1h0m0s
+  # refreshInterval: 1h0m0s
+  updatePolicy: Replace # Pushes and overwrites immediately
+  deletionPolicy: Delete # Deletes from provider when PushSecret is gone
   secretStoreRefs:
     - name: k8s-store-auth-ns
       kind: SecretStore
