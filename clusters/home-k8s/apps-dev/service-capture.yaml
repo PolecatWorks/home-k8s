@@ -10,8 +10,8 @@ metadata:
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
 metadata:
-  name: service-capture
-  namespace: service-capture
+  name: service-cap
+  namespace: service-cap
 spec:
   interval: 1m0s
   url: https://github.com/PolecatWorks/service-capture.git
@@ -27,12 +27,12 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: service-capture
-  namespace: service-capture
+  namespace: service-cap
 spec:
   interval: 10m0s
   path: ./fluxcd-dev
-  targetNamespace: service-capture
+  targetNamespace: service-cap
   prune: true
   sourceRef:
     kind: GitRepository
-    name: service-capture
+    name: service-cap
