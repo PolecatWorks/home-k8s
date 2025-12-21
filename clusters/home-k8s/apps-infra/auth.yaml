@@ -6,6 +6,44 @@ metadata:
   labels:
     toolkit.fluxcd.io/tenant: security
 ---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: auth
+  name: eso-store-push-role
+rules:
+- apiGroups: [""]
+  resources:
+  - secrets
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - authorization.k8s.io
+  resources:
+  - selfsubjectrulesreviews
+  verbs:
+  - create
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: bind-eso-store-role-to-eso-service-account
+  namespace: auth # Destination namespace where the secret will be pushed
+subjects:
+  - kind: ServiceAccount
+    name: sa-externalsecret
+    namespace: dbs
+roleRef:
+  kind: Role
+  name: eso-store-push-role
+  apiGroup: rbac.authorization.k8s.io
+---
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
@@ -110,3 +148,47 @@ spec:
         host: keycloak-keycloakx-http.auth.svc.cluster.local
         port:
           number: 80
+---
+apiVersion: external-secrets.io/v1
+kind: SecretStore
+metadata:
+  name: k8s-store-auth-ns
+  namespace: dbs
+spec:
+  provider:
+    kubernetes:
+      remoteNamespace: auth  # The destination
+      server:
+        url: https://kubernetes.default.svc
+        caProvider:
+          type: ConfigMap
+          name: kube-root-ca.crt
+          key: ca.crt
+      auth:
+        serviceAccount:
+          name: sa-externalsecret  # ServiceAccount in 'dbs' namespace with permissions to read secrets in 'auth' namespace
+---
+apiVersion: external-secrets.io/v1alpha1
+kind: PushSecret
+metadata:
+  name: push-db0-keycloak-user-to-auth-ns
+  namespace: dbs
+spec:
+  refreshInterval: 1h0m0s
+  secretStoreRefs:
+    - name: k8s-store-auth-ns
+      kind: SecretStore
+  selector:
+    secret:
+      name: db0-keycloak-user # The source secret in 'dbs'
+  data:
+    - match:
+        secretKey: username # The source secret key in secret in 'dbs' namespace
+        remoteRef:
+          remoteKey: db0-keycloak-user # name of the target secret in the auth namespace
+          property: username # The key in the target secret
+    - match:
+        secretKey: password
+        remoteRef:
+          remoteKey: db0-keycloak-user # Must match the one above to put both in one secret
+          property: password

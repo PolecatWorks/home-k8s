@@ -2,7 +2,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: operators
+  name: controllers
   namespace: flux-system
 spec:
   sourceRef:
@@ -10,6 +10,8 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
+  dependsOn:
+    - name: operators
   interval: 5m
-  path: ./infrastructure
+  path: ./clusters/home-k8s/controllers
   prune: true
