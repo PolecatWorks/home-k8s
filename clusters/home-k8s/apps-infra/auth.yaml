@@ -90,12 +90,12 @@ spec:
       existingSecret: db0-keycloak-user
       existingSecretKey: password
     extraEnv: |
-      - name: KEYCLOAK_ADMIN
+      - name: KC_BOOTSTRAP_ADMIN_USERNAME
         valueFrom:
           secretKeyRef:
             name: {{ include "keycloak.fullname" . }}-admin-creds
             key: username
-      - name: KEYCLOAK_ADMIN_PASSWORD
+      - name: KC_BOOTSTRAP_ADMIN_PASSWORD
         valueFrom:
           secretKeyRef:
             name: {{ include "keycloak.fullname" . }}-admin-creds
@@ -119,6 +119,7 @@ metadata:
   namespace: auth
 spec:
   refreshInterval: 1h
+  refreshPolicy: CreatedOnce
   target:
     template:
       data:
