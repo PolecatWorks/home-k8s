@@ -26,6 +26,7 @@ spec:
   refreshInterval: 24h
   target:
     name: db0-keycloak-user
+    creationPolicy: Merge
     template:
       metadata:
         labels:
@@ -48,6 +49,7 @@ metadata:
 spec:
   refreshInterval: 24h
   target:
+    creationPolicy: Merge
     template:
       metadata:
         labels:
