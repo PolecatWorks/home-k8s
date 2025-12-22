@@ -31,3 +31,9 @@ Or via a single command line
 PG_PASSWD_KEYCLOAK=$(kubectl -n security get secrets keycloak-postgresql -o jsonpath="{.data.DB_PASS}" | base64 -d)
 PG_PASSWD_LOG4HAM=$(kubectl -n log4ham get secrets log4ham-pg -o jsonpath="{.data.DB_PASS}" | base64 -d)
 PG_PASSWD_DEV=$(kubectl -n dev get secrets example-postgres-db-credentials -o jsonpath="{.data.DB_PASS}" | base64 -d)
+
+# Get Keycloak admin password
+
+Get the password out of the keycloak secret (not this secret MUST not be changed else you need to do a recovery process via https://www.keycloak.org/server/bootstrap-admin-recovery)
+
+    kubectl -n auth get secrets/keycloak-keycloakx-admin-creds -o jsonpath="{.data.password}" | base64 -d
