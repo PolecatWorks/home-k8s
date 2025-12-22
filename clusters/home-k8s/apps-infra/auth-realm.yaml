@@ -1,0 +1,57 @@
+---
+apiVersion: v1.edp.epam.com/v1alpha1
+kind: ClusterKeycloak
+metadata:
+  name: keycloak
+spec:
+  secret: keycloak-keycloakx-admin-creds             # Secret name
+  url: http://keycloak-keycloakx-http.auth.svc.cluster.local/auth   # Keycloak URL
+---
+apiVersion: v1.edp.epam.com/v1alpha1
+kind: ClusterKeycloakRealm
+metadata:
+ name: master
+spec:
+ realmName: master
+ clusterKeycloakRef: keycloak
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: keycloak-master-sa-secret
+  namespace: auth
+spec:
+  refreshInterval: 1h
+  refreshPolicy: CreatedOnce
+  target:
+    template:
+      data:
+        clientSecret: "{{ .password }}"
+  dataFrom:
+    - sourceRef:
+        generatorRef:
+          apiVersion: generators.external-secrets.io/v1alpha1
+          kind: Password
+          name: keycloak-password
+---
+apiVersion: v1.edp.epam.com/v1
+kind: KeycloakClient
+metadata:
+  name: master-admin-sa
+  namespace: auth
+spec:
+  clientId: master-admin-sa
+  realmRef:
+    name: master
+    kind: ClusterKeycloakRealm
+  secret: $keycloak-master-sa-secret:clientSecret
+  public: false
+  protocol: openid-connect
+  serviceAccount:
+    enabled: true
+    realmRoles:
+      - offline_access
+    clientRoles:
+      - clientId: master-realm
+        roles:
+          - manage-realm
