@@ -16,7 +16,9 @@ metadata:
   namespace: auth
 spec:
   realmName: master-initial
-  keycloakRef: keycloak
+  keycloakRef:
+    kind: Keycloak
+    name: keycloak-initial
 ---
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
