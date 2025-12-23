@@ -33,7 +33,6 @@ spec:
       data:
         username: master-admin-sa
         password: "{{ .password }}"
-        clientSecret: "{{ .password }}"
   dataFrom:
     - sourceRef:
         generatorRef:
@@ -52,7 +51,7 @@ spec:
   realmRef:
     name: master-initial
     kind: KeycloakRealm
-  secret: $keycloak-master-sa-secret:clientSecret
+  secret: $keycloak-master-sa-secret:password
   public: false
   protocol: openid-connect
   serviceAccount:
