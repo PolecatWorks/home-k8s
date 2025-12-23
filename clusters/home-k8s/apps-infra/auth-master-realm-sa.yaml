@@ -31,7 +31,8 @@ spec:
   target:
     template:
       data:
-        clientSecret: "{{ .password }}"
+        username: master-admin-sa
+        password: "{{ .password }}"
   dataFrom:
     - sourceRef:
         generatorRef:
