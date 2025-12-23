@@ -58,6 +58,7 @@ spec:
     enabled: true
     realmRoles:
       - offline_access
+      - admin
     clientRoles:
       - clientId: master-realm
         roles:
