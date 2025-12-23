@@ -1,4 +1,6 @@
 ---
+# Create keycloak db and push secret to auth
+# Deploy Keycloak with an initial user;.,m
 apiVersion: v1
 kind: Namespace
 metadata:
