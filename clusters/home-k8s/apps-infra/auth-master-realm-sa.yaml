@@ -12,7 +12,7 @@ spec:
 apiVersion: v1.edp.epam.com/v1
 kind: KeycloakRealm
 metadata:
-  name: master
+  name: master-initial
   namespace: auth
 spec:
   realmName: master-initial
