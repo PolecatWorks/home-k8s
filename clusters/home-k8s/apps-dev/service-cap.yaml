@@ -26,6 +26,7 @@ spec:
         serviceAccount:
           name: sa-externalsecret  # ServiceAccount in 'dbs' namespace with permissions to read secrets in target namespaces
 ---
+# Push the DB cred to allow the service-cap app to access the DB
 apiVersion: external-secrets.io/v1alpha1
 kind: PushSecret
 metadata:
@@ -41,8 +42,8 @@ spec:
   selector:
     secret:
       name: db0-service-cap-user # The source secret in 'dbs'
-  # template:
-  #   type: kubernetes.io/dockerconfigjson
+  template:
+    type: kubernetes.io/dockerconfigjson
   data:
     - match:
         secretKey: username # The source secret key in secret in 'dbs' namespace
