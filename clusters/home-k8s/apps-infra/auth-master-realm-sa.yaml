@@ -48,6 +48,7 @@ metadata:
   namespace: auth
 spec:
   clientId: master-admin-sa
+  name: Master Admin Service Account
   realmRef:
     name: master-initial
     kind: KeycloakRealm
