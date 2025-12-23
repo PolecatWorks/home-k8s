@@ -1,9 +1,10 @@
 ---
-# Setup the keycloak-master-sa-secret for the Master Realm
+# Setup the master-sa for the Master Realm
 apiVersion: v1.edp.epam.com/v1
 kind: Keycloak
 metadata:
   name: keycloak-initial
+  namespace: auth
 spec:
   secret: keycloak-keycloakx-admin-creds             # Secret name
   url: http://keycloak-keycloakx-http.auth.svc.cluster.local/auth   # Keycloak URL
@@ -12,6 +13,7 @@ apiVersion: v1.edp.epam.com/v1
 kind: KeycloakRealm
 metadata:
  name: master-initial
+  namespace: auth
 spec:
  realmName: master-initial
  keycloakRef: keycloak
