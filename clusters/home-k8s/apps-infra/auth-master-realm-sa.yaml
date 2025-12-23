@@ -15,7 +15,7 @@ metadata:
   name: master-initial
   namespace: auth
 spec:
-  realmName: master-initial
+  realmName: master
   keycloakRef:
     kind: Keycloak
     name: keycloak-initial

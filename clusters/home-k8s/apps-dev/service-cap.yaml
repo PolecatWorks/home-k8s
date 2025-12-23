@@ -57,6 +57,19 @@ spec:
           remoteKey: db0-service-cap-user # Must match the one above to put both in one secret
           property: password
 ---
+apiVersion: v1.edp.epam.com/v1
+kind: KeycloakRealm
+metadata:
+  name: dev
+  namespace: auth
+spec:
+  realmName: dev
+  keycloakRef:
+    kind: Keycloak
+    name: keycloak
+  displayName: Dev for Service Capture
+
+
 # # Keycloak realm for service-cap
 # apiVersion: external-secrets.io/v1
 # kind: SecretStore
