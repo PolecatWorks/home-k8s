@@ -12,11 +12,11 @@ spec:
 apiVersion: v1.edp.epam.com/v1
 kind: KeycloakRealm
 metadata:
- name: master-initial
+  name: master-initial
   namespace: auth
 spec:
- realmName: master-initial
- keycloakRef: keycloak
+  realmName: master-initial
+  keycloakRef: keycloak
 ---
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
