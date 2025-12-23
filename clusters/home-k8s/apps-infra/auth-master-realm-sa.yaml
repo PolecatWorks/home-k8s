@@ -1,19 +1,20 @@
 ---
-apiVersion: v1.edp.epam.com/v1alpha1
-kind: ClusterKeycloak
+# Setup the keycloak-master-sa-secret for the Master Realm
+apiVersion: v1.edp.epam.com/v1
+kind: Keycloak
 metadata:
-  name: keycloak
+  name: keycloak-initial
 spec:
   secret: keycloak-keycloakx-admin-creds             # Secret name
   url: http://keycloak-keycloakx-http.auth.svc.cluster.local/auth   # Keycloak URL
 ---
-apiVersion: v1.edp.epam.com/v1alpha1
-kind: ClusterKeycloakRealm
+apiVersion: v1.edp.epam.com/v1
+kind: KeycloakRealm
 metadata:
- name: master
+ name: master-initial
 spec:
- realmName: master
- clusterKeycloakRef: keycloak
+ realmName: master-initial
+ keycloakRef: keycloak
 ---
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
@@ -42,8 +43,8 @@ metadata:
 spec:
   clientId: master-admin-sa
   realmRef:
-    name: master
-    kind: ClusterKeycloakRealm
+    name: master-initial
+    kind: KeycloakRealm
   secret: $keycloak-master-sa-secret:clientSecret
   public: false
   protocol: openid-connect
