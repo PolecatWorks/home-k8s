@@ -33,6 +33,7 @@ spec:
       data:
         username: master-admin-sa
         password: "{{ .password }}"
+        clientSecret: "{{ .password }}"
   dataFrom:
     - sourceRef:
         generatorRef:
