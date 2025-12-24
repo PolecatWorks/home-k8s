@@ -1,5 +1,5 @@
 ---
-# External Secret Operator Service Account and RBAC for self-subject-checks to push secrets from auth namespace
+# Enable secret PUSH from dbs to dev
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 metadata:
@@ -162,6 +162,28 @@ spec:
         remoteRef:
           remoteKey: k8s-store-dev-ns # Must match the one above to put both in one secret
           property: password
+---
+# Enable secret PUSH from auth to dev
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+metadata:
+  name: auth-secret-receive
+namespace: dev
+resources:
+  - ../../utilities/eso_enable_receive_secrets.yaml
+patches:
+  - target:
+      kind: RoleBinding
+    patch:
+      - op: replace
+        path: /metadata/name
+        value: es-store-role-from-auth-to-dev
+      - op: add
+        path: /subjects/-
+        value:
+          kind: ServiceAccount
+          name: sa-externalsecret
+          namespace: auth
 ---
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
