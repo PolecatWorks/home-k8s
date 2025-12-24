@@ -27,7 +27,6 @@ spec:
             kind: ServiceAccount
             name: sa-externalsecret
             namespace: dbs
-
 ---
 # Push the DB cred to allow the service-cap app to access the DB
 apiVersion: external-secrets.io/v1alpha1
