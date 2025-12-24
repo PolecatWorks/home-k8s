@@ -94,7 +94,7 @@ apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
   name: keycloak-dev-sa-secret
-  namespace: dev
+  namespace: auth
 spec:
   refreshInterval: 1h
   target:
