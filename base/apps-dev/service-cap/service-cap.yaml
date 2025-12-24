@@ -1,33 +1,4 @@
 ---
-# Enable secret PUSH from dbs to dev
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: dev-secret-receive-from-dbs
-  namespace: dev
-spec:
-  interval: 10m0s
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-    namespace: flux-system
-  targetNamespace: dev
-  path: /utilities/eso_enable_receive_secrets
-  patches:
-    - target:
-        kind: RoleBinding
-      patch: |
-        - op: replace
-          path: /metadata/name
-          value: es-store-role-from-dbs-to-dev
-        - op: add
-          path: /subjects/-
-          value:
-            kind: ServiceAccount
-            name: sa-externalsecret
-            namespace: dbs
----
 # Push the DB cred to allow the service-cap app to access the DB
 apiVersion: external-secrets.io/v1alpha1
 kind: PushSecret
@@ -142,55 +113,6 @@ spec:
         remoteRef:
           remoteKey: k8s-store-dev-ns # Must match the one above to put both in one secret
           property: password
----
-# Enable secret PUSH from auth to dev
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-metadata:
-  name: dev-secret-receive-from-auth
-namespace: dev
-resources:
-  - ../../utilities/eso_enable_receive_secrets.yaml
-patches:
-  - target:
-      kind: RoleBinding
-    patch:
-      - op: replace
-        path: /metadata/name
-        value: es-store-role-from-auth-to-dev
-      - op: add
-        path: /subjects/-
-        value:
-          kind: ServiceAccount
-          name: sa-externalsecret
-          namespace: auth
----
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-metadata:
-  name: dev-secret-push-from-auth
-namespace: auth
-resources:
-  - ../../utilities/eso_enable_push_secrets.yaml
-patches:
-  - target:
-      kind: RoleBinding
-    patch:
-      - op: add
-        path: /subjects/-
-        value:
-          kind: ServiceAccount
-          name: sa-externalsecret
-          namespace: auth
-  - target:
-      kind: SecretStore
-    patch:
-      - op: replace
-        path: /metadata/name
-        value: k8s-store-dev-ns
-      - op: replace
-        path: /spec/provider/kubernetes/remoteNamespace
-        value: dev
 ---
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository

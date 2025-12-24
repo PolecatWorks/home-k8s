@@ -6,4 +6,3 @@ metadata:
 namespace: dev
 resources:
   - service-cap.yaml
-  - dbs_enable_push_secrets

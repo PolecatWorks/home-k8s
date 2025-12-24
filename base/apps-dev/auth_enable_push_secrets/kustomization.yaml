@@ -2,10 +2,10 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 metadata:
-  name: dev-secret-push-from-dbs
-namespace: dbs
+  name: dev-secret-push-from-auth
+namespace: auth
 resources:
-  - ../../../../base/eso_enable_push_secrets.yaml
+  - ../../../base/eso_enable_push_secrets.yaml
 patches:
   - target:
       kind: RoleBinding
@@ -15,7 +15,7 @@ patches:
         value:
           kind: ServiceAccount
           name: sa-externalsecret
-          namespace: dbs
+          namespace: auth
   - target:
       kind: SecretStore
     patch: |
