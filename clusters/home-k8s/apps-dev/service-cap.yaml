@@ -13,7 +13,7 @@ spec:
     name: flux-system
     namespace: flux-system
   targetNamespace: dev
-  path: /utilities/eso_enable_receive_secrets.yaml
+  path: /utilities/eso_enable_receive_secrets
   patches:
     - target:
         kind: RoleBinding
