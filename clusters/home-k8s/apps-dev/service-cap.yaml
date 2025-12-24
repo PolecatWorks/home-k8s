@@ -3,7 +3,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 metadata:
-  name: dbs-secret-receive
+  name: dev-secret-receive-from-dbs
 namespace: dev
 resources:
   - ../../utilities/eso_enable_receive_secrets.yaml
@@ -24,8 +24,8 @@ patches:
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 metadata:
-  name: dbs-secret-push
-namespace: auth
+  name: dev-secret-push-from-dbs
+namespace: dbs
 resources:
   - ../../utilities/eso_enable_push_secrets.yaml
 patches:
@@ -37,7 +37,7 @@ patches:
         value:
           kind: ServiceAccount
           name: sa-externalsecret
-          namespace: auth
+          namespace: dbs
   - target:
       kind: SecretStore
     patch:
@@ -163,11 +163,13 @@ spec:
           remoteKey: k8s-store-dev-ns # Must match the one above to put both in one secret
           property: password
 ---
+
+
 # Enable secret PUSH from auth to dev
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 metadata:
-  name: auth-secret-receive
+  name: dev-secret-receive-from-auth
 namespace: dev
 resources:
   - ../../utilities/eso_enable_receive_secrets.yaml
@@ -184,6 +186,33 @@ patches:
           kind: ServiceAccount
           name: sa-externalsecret
           namespace: auth
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+metadata:
+  name: dev-secret-push-from-auth
+namespace: auth
+resources:
+  - ../../utilities/eso_enable_push_secrets.yaml
+patches:
+  - target:
+      kind: RoleBinding
+    patch:
+      - op: add
+        path: /subjects/-
+        value:
+          kind: ServiceAccount
+          name: sa-externalsecret
+          namespace: auth
+  - target:
+      kind: SecretStore
+    patch:
+      - op: replace
+        path: /metadata/name
+        value: k8s-store-dev-ns
+      - op: replace
+        path: /spec/provider/kubernetes/remoteNamespace
+        value: dev
 ---
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
