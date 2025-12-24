@@ -6,6 +6,7 @@ metadata:
 namespace: dbs
 resources:
   - /utilities/eso_enable_push_secrets/eso_enable_push_secrets.yaml
+  - ns.yaml
 patches:
   - target:
       kind: RoleBinding
