@@ -3,10 +3,31 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 metadata:
-  name: auth-secret-receive
+  name: dbs-secret-receive
 namespace: dev
 resources:
-  - ../../utilities/enable_receive_secrets.yaml
+  - ../../utilities/eso_enable_receive_secrets.yaml
+patches:
+  - target:
+      kind: RoleBinding
+    patch:
+      - op: replace
+        path: /metadata/name
+        value: es-store-role-from-dbs-to-dev
+      - op: add
+        path: /subjects/-
+        value:
+          kind: ServiceAccount
+          name: sa-externalsecret
+          namespace: dbs
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+metadata:
+  name: dbs-secret-push
+namespace: auth
+resources:
+  - ../../utilities/eso_enable_push_secrets.yaml
 patches:
   - target:
       kind: RoleBinding
@@ -16,27 +37,16 @@ patches:
         value:
           kind: ServiceAccount
           name: sa-externalsecret
-          namespace: dev
----
-# Setup from dbs to service-cap
-apiVersion: external-secrets.io/v1
-kind: SecretStore
-metadata:
-  name: k8s-store-dev-ns
-  namespace: dbs
-spec:
-  provider:
-    kubernetes:
-      remoteNamespace: dev  # The destination
-      server:
-        url: https://kubernetes.default.svc
-        caProvider:
-          type: ConfigMap
-          name: kube-root-ca.crt
-          key: ca.crt
-      auth:
-        serviceAccount:
-          name: sa-externalsecret  # ServiceAccount in 'dbs' namespace with permissions to read secrets in target namespaces
+          namespace: auth
+  - target:
+      kind: SecretStore
+    patch:
+      - op: replace
+        path: /metadata/name
+        value: k8s-store-dev-ns
+      - op: replace
+        path: /spec/provider/kubernetes/remoteNamespace
+        value: dev
 ---
 # Push the DB cred to allow the service-cap app to access the DB
 apiVersion: external-secrets.io/v1alpha1
@@ -49,7 +59,7 @@ spec:
   updatePolicy: Replace # Pushes and overwrites immediately
   deletionPolicy: Delete # Deletes from provider when PushSecret is gone
   secretStoreRefs:
-    - name: k8s-store-service-cap-ns
+    - name: k8s-store-dev-ns
       kind: SecretStore
   selector:
     secret:
