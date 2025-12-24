@@ -10,7 +10,7 @@ resources:
 patches:
   - target:
       kind: RoleBinding
-    patch:
+    patch: |
       - op: add
         path: /subjects/-
         value:
@@ -19,7 +19,7 @@ patches:
           namespace: dbs
   - target:
       kind: SecretStore
-    patch:
+    patch: |
       - op: replace
         path: /metadata/name
         value: k8s-store-dev-ns
