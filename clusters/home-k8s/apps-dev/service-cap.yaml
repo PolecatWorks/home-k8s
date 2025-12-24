@@ -118,7 +118,7 @@ spec:
   clientId: dev-admin-sa
   name: Dev Admin Service Account
   realmRef:
-    name: master
+    name: dev
     kind: KeycloakRealm
   secret: $keycloak-dev-sa-secret:password
   public: false
@@ -129,7 +129,7 @@ spec:
       - offline_access
       - admin
     clientRoles:
-      - clientId: master-realm
+      - clientId: dev-realm
         roles:
           - manage-realm
 
