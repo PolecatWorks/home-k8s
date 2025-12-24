@@ -5,8 +5,7 @@ metadata:
   name: dev-secret-push-from-dbs
 namespace: dbs
 resources:
-  - ../../../../../utilities/eso_enable_push_secrets.yaml
-  # - ns.yaml
+  - ../../../../../base/eso_enable_push_secrets.yaml
 patches:
   - target:
       kind: RoleBinding
