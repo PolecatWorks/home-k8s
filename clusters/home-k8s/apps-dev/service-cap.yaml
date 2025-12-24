@@ -3,12 +3,12 @@
 apiVersion: external-secrets.io/v1
 kind: SecretStore
 metadata:
-  name: k8s-store-service-cap-ns
+  name: k8s-store-dev-ns
   namespace: dbs
 spec:
   provider:
     kubernetes:
-      remoteNamespace: service-cap  # The destination
+      remoteNamespace: dev  # The destination
       server:
         url: https://kubernetes.default.svc
         caProvider:
@@ -23,7 +23,7 @@ spec:
 apiVersion: external-secrets.io/v1alpha1
 kind: PushSecret
 metadata:
-  name: push-db0-service-cap-user-to-service-cap-ns
+  name: push-db0-service-cap-user-to-dev-ns
   namespace: dbs
 spec:
   refreshInterval: 1m0s
