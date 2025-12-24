@@ -1,25 +1,31 @@
 ---
 # Enable secret PUSH from dbs to dev
-apiVersion: kustomize.config.k8s.io/v1beta1
+apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: dev-secret-receive-from-dbs
-namespace: dev
-resources:
-  - ../../utilities/eso_enable_receive_secrets.yaml
-patches:
-  - target:
-      kind: RoleBinding
-    patch:
-      - op: replace
-        path: /metadata/name
-        value: es-store-role-from-dbs-to-dev
-      - op: add
-        path: /subjects/-
-        value:
-          kind: ServiceAccount
-          name: sa-externalsecret
-          namespace: dbs
+spec:
+  interval: 10m0s
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: dev
+  path: /utilities/eso_enable_receive_secrets.yaml
+  patches:
+    - target:
+        kind: RoleBinding
+      patch: |
+        - op: replace
+          path: /metadata/name
+          value: es-store-role-from-dbs-to-dev
+        - op: add
+          path: /subjects/-
+          value:
+            kind: ServiceAccount
+            name: sa-externalsecret
+            namespace: dbs
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
@@ -163,8 +169,6 @@ spec:
           remoteKey: k8s-store-dev-ns # Must match the one above to put both in one secret
           property: password
 ---
-
-
 # Enable secret PUSH from auth to dev
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
