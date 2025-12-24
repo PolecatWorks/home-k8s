@@ -6,7 +6,7 @@ metadata:
   name: dev-secret-receive-from-auth
 namespace: dev
 resources:
-  - ../../../base/eso_enable_receive_secrets.yaml
+  - ../../eso_enable_receive_secrets.yaml
 patches:
   - target:
       kind: RoleBinding
