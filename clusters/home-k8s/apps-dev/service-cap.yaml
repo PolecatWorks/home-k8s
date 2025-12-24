@@ -132,56 +132,36 @@ spec:
       - clientId: dev-realm
         roles:
           - manage-realm
-
-# # Keycloak realm for service-cap
-# apiVersion: external-secrets.io/v1
-# kind: SecretStore
-# metadata:
-#   name: keycloak-service_cap_realm-ca
-#   namespace: auth
-# spec:
-#   provider:
-#     kubernetes:
-#       remoteNamespace: service-cap  # The destination
-#       server:
-#         url: https://kubernetes.default.svc
-#         caProvider:
-#           type: ConfigMap
-#           name: kube-root-ca.crt
-#           key: ca.crt
-#       auth:
-#         serviceAccount:
-#           name: sa-externalsecret  # ServiceAccount in 'dbs' namespace with permissions to read secrets in target namespaces
-# ---
-# # Push the realm cred to allow the service-cap app to access the DB
-# apiVersion: external-secrets.io/v1alpha1
-# kind: PushSecret
-# metadata:
-#   name: push-db0-service-cap-user-to-service-cap-ns
-#   namespace: dbs
-# spec:
-#   refreshInterval: 1m0s
-#   updatePolicy: Replace # Pushes and overwrites immediately
-#   deletionPolicy: Delete # Deletes from provider when PushSecret is gone
-#   secretStoreRefs:
-#     - name: k8s-store-service-cap-ns
-#       kind: SecretStore
-#   selector:
-#     secret:
-#       name: db0-service-cap-user # The source secret in 'dbs'
-#   # template:
-#   #   type: kubernetes.io/dockerconfigjson
-#   data:
-#     - match:
-#         secretKey: username # The source secret key in secret in 'dbs' namespace
-#         remoteRef:
-#           remoteKey: db0-service-cap-user # name of the target secret in the auth namespace
-#           property: username # The key in the target secret
-#     - match:
-#         secretKey: password
-#         remoteRef:
-#           remoteKey: db0-service-cap-user # Must match the one above to put both in one secret
-#           property: password
+---
+# Push the realm cred to allow the service-cap app to access the DB
+apiVersion: external-secrets.io/v1alpha1
+kind: PushSecret
+metadata:
+  name: push-keycloak-dev-sa-to-dev-ns
+  namespace: dbs
+spec:
+  refreshInterval: 1m0s
+  updatePolicy: Replace # Pushes and overwrites immediately
+  deletionPolicy: Delete # Deletes from provider when PushSecret is gone
+  secretStoreRefs:
+    - name: k8s-store-dev-ns
+      kind: SecretStore
+  selector:
+    secret:
+      name: keycloak-dev-sa-secret # The source secret in 'dbs'
+  # template:
+  #   type: kubernetes.io/dockerconfigjson
+  data:
+    - match:
+        secretKey: username # The source secret key in secret in 'dbs' namespace
+        remoteRef:
+          remoteKey: k8s-store-dev-ns # name of the target secret in the auth namespace
+          property: username # The key in the target secret
+    - match:
+        secretKey: password
+        remoteRef:
+          remoteKey: k8s-store-dev-ns # Must match the one above to put both in one secret
+          property: password
 ---
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
