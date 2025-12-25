@@ -6,7 +6,7 @@ metadata:
   name: dev-secret-receive-from-dbs
 namespace: dev
 resources:
-  - ../../eso_enable_receive_secrets.yaml
+  - ../../eso_receive_secrets.yaml
 nameSuffix: -from-dbs
 patches:
   - target:

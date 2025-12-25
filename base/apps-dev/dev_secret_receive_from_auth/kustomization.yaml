@@ -6,7 +6,7 @@ metadata:
   name: dev-secret-receive-from-auth
 namespace: dev
 resources:
-  - ../../eso_enable_receive_secrets.yaml
+  - ../../eso_receive_secrets.yaml
 nameSuffix: -from-auth
 patches:
   - target:
