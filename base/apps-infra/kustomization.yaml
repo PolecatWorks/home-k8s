@@ -7,5 +7,5 @@ namespace: flux-system
 resources:
   - dbs_enable_push_secrets
   - auth_enable_push_secrets
-  - auth-keycloak.yaml
-  - auth-master-realm-sa.yaml
+  # - auth-keycloak.yaml
+  # - auth-master-realm-sa.yaml
