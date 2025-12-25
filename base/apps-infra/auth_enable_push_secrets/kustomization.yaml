@@ -5,7 +5,7 @@ metadata:
   name: dev-secret-push-from-auth
 namespace: auth
 resources:
-  - ../../eso_enable_push_secrets.yaml
+  - ../../base/eso_enable_push_secrets.yaml
 patches:
   - target:
       kind: RoleBinding
@@ -16,12 +16,3 @@ patches:
           kind: ServiceAccount
           name: sa-externalsecret
           namespace: auth
-  - target:
-      kind: SecretStore
-    patch: |
-      - op: replace
-        path: /metadata/name
-        value: k8s-store-dev-ns
-      - op: replace
-        path: /spec/provider/kubernetes/remoteNamespace
-        value: dev
