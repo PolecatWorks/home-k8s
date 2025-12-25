@@ -14,5 +14,5 @@ spec:
     - name: operators
     - name: controllers
   interval: 5m
-  path: ./clusters/home-k8s/apps-infra
+  path: ./base/apps-infra
   prune: true
