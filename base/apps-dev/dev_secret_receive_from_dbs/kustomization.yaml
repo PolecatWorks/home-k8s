@@ -8,15 +8,15 @@ namespace: dev
 resources:
   - ../../eso_enable_receive_secrets.yaml
 patches:
-- target:
-    kind: RoleBinding
-  patch: |
-    - op: replace
-      path: /metadata/name
-      value: es-store-role-from-dbs-to-dev
-    - op: add
-      path: /subjects/-
-      value:
-        kind: ServiceAccount
-        name: sa-externalsecret
-        namespace: dbs
+  - target:
+      kind: RoleBinding
+    patch: |
+      - op: replace
+        path: /metadata/name
+        value: es-store-role-from-dbs-to-dev
+      - op: add
+        path: /subjects/-
+        value:
+          kind: ServiceAccount
+          name: sa-externalsecret
+          namespace: dbs
