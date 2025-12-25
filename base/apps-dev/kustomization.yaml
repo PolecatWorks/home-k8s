@@ -3,7 +3,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 metadata:
   name: apps-dev
-namespace: dev
 resources:
   # - dbs_send_push_secrets
   # - dev_secret_receive_from_dbs
