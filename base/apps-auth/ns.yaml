@@ -1,0 +1,8 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: auth
+  labels:
+    toolkit.fluxcd.io/tenant: auth
+    istio-injection: enabled

@@ -5,6 +5,7 @@ metadata:
   name: apps-auth
 resources:
   - dbs_enable_push_secrets
+  - ns.yaml
   # - auth_enable_push_secrets
   # - auth-keycloak.yaml
   # - auth-master-realm-sa.yaml
