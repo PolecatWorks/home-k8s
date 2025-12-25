@@ -5,8 +5,8 @@ metadata:
   name: apps-dev
 namespace: dev
 resources:
-  - dbs_send_push_secrets
-  - dev_secret_receive_from_dbs
+  # - dbs_send_push_secrets
+  # - dev_secret_receive_from_dbs
   - auth_send_push_secrets
   - dev_secret_receive_from_auth
   - service-cap
