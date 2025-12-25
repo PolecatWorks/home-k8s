@@ -7,14 +7,11 @@ metadata:
 namespace: dev
 resources:
   - ../../eso_receive_secrets.yaml
-# nameSuffix: -from-auth
+nameSuffix: -from-auth
 patches:
   - target:
       kind: RoleBinding
     patch: |
-      - op: replace
-        path: /metadata/name
-        value: es-store-role-from-auth
       - op: add
         path: /subjects/-
         value:
