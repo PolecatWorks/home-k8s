@@ -8,5 +8,6 @@ resources:
   # - dev_secret_receive_from_dbs
   - auth_send_push_secrets
   - dev_secret_receive_from_auth
+  - dev_enable_receive_secrets
   - service-cap
   - ns.yaml
