@@ -1,12 +1,4 @@
 ---
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: auth
-  labels:
-    toolkit.fluxcd.io/tenant: auth
-    istio-injection: enabled
----
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
