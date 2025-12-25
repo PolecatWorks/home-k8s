@@ -2,7 +2,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: apps-infra
+  name: apps-auth
   namespace: flux-system
 spec:
   sourceRef:
@@ -14,5 +14,5 @@ spec:
     - name: operators
     - name: controllers
   interval: 5m
-  path: ./base/apps-infra
+  path: ./base/apps-auth
   prune: true
