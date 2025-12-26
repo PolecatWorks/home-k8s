@@ -58,12 +58,11 @@ spec:
   serviceAccount:
     enabled: true
     realmRoles:
-      - offline_access
-      - admin
-    clientRoles:
-      - clientId: dev-realm
-        roles:
-          - manage-realm
+      - manage-realm
+    # clientRoles:
+    #   - clientId: dev-realm
+    #     roles:
+    #       - manage-realm
 ---
 # Push the realm cred to allow the service-cap app to access the DB
 apiVersion: external-secrets.io/v1alpha1
