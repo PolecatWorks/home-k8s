@@ -94,3 +94,14 @@ spec:
         remoteRef:
           remoteKey: keycloak-dev-sa # Must match the one above to put both in one secret
           property: password
+---
+apiVersion: v1.edp.epam.com/v1
+kind: Keycloak
+metadata:
+  name: keycloak
+  namespace: dev
+spec:
+  adminType: serviceAccount
+  secret: keycloak-dev-sa            # Secret name
+  url: http://keycloak-keycloakx-http.auth.svc.cluster.local/auth   # Keycloak URL
+---
