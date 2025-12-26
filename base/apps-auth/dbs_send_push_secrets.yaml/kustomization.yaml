@@ -1,0 +1,15 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+metadata:
+  name: dbs-send_push_secrets
+resources:
+  - ../../eso_send_push_secrets.yaml
+namespace: dbs
+patches:
+  - target:
+      kind: SecretStore
+    patch: |
+      - op: replace
+        path: /spec/provider/kubernetes/remotNameSpace
+        value: auth
