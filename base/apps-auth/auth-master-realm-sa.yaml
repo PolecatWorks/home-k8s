@@ -21,6 +21,8 @@
 #           kind: Password
 #           name: keycloak-password
 ---
+# kubectl -n auth create secret generic keycloak-master-sa --from-literal=username=master-admin-sa --from-literal=password="KEYCLOAK PASSWORD HERE"
+---
 apiVersion: v1.edp.epam.com/v1
 kind: Keycloak
 metadata:
@@ -28,7 +30,7 @@ metadata:
   namespace: auth
 spec:
   adminType: serviceAccount
-  secret: keycloak-master-sa-secret             # Secret name
+  secret: keycloak-master-sa            # Secret name
   url: http://keycloak-keycloakx-http.auth.svc.cluster.local/auth   # Keycloak URL
 ---
 apiVersion: v1.edp.epam.com/v1
@@ -55,7 +57,7 @@ spec:
     kind: KeycloakRealm
   # Try to set the secret so that the creds can be managed by keycloak.. BUT likely this will result in
   # failed auth unless the secret is synced back from keycloak to the secret used here.
-  secret: $keycloak-master-sa-secret:password
+  secret: $keycloak-master-sa:password
   public: false
   protocol: openid-connect
   serviceAccount:
