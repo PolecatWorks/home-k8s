@@ -1,43 +1,25 @@
 ---
-apiVersion: external-secrets.io/v1
-kind: ExternalSecret
-metadata:
-  name: keycloak-master-0-sa-secret
-  namespace: auth
-spec:
-  refreshInterval: 1h
-  refreshPolicy: CreatedOnce
-  target:
-    template:
-      data:
-        username: master-admin-0-sa
-        password: "{{ .password }}"
-  dataFrom:
-    - sourceRef:
-        generatorRef:
-          apiVersion: generators.external-secrets.io/v1alpha1
-          kind: Password
-          name: keycloak-password
----
-apiVersion: external-secrets.io/v1
-kind: ExternalSecret
-metadata:
-  name: keycloak-master-1-sa-secret
-  namespace: auth
-spec:
-  refreshInterval: 1h
-  refreshPolicy: CreatedOnce
-  target:
-    template:
-      data:
-        username: master-admin-1-sa
-        password: "{{ .password }}"
-  dataFrom:
-    - sourceRef:
-        generatorRef:
-          apiVersion: generators.external-secrets.io/v1alpha1
-          kind: Password
-          name: keycloak-password
+# Use an client realm to
+# ---
+# apiVersion: external-secrets.io/v1
+# kind: ExternalSecret
+# metadata:
+#   name: keycloak-master-sa-secret
+#   namespace: auth
+# spec:
+#   refreshInterval: 1h
+#   refreshPolicy: CreatedOnce
+#   target:
+#     template:
+#       data:
+#         username: master-admin-sa
+#         password: "{{ .password }}"
+#   dataFrom:
+#     - sourceRef:
+#         generatorRef:
+#           apiVersion: generators.external-secrets.io/v1alpha1
+#           kind: Password
+#           name: keycloak-password
 ---
 apiVersion: v1.edp.epam.com/v1
 kind: Keycloak
@@ -63,39 +45,17 @@ spec:
 apiVersion: v1.edp.epam.com/v1
 kind: KeycloakClient
 metadata:
-  name: master-admin-0-sa
+  name: master-admin-sa
   namespace: auth
 spec:
-  clientId: master-admin-0-sa
+  clientId: master-admin-sa
   name: Master Admin Service Account
   realmRef:
     name: master
     kind: KeycloakRealm
+  # Try to set the secret so that the creds can be managed by keycloak.. BUT likely this will result in
+  # failed auth unless the secret is synced back from keycloak to the secret used here.
   secret: $keycloak-master-sa-secret:password
-  public: false
-  protocol: openid-connect
-  serviceAccount:
-    enabled: true
-    realmRoles:
-      - offline_access
-      - admin
-    clientRoles:
-      - clientId: master-realm
-        roles:
-          - manage-realm
----
-apiVersion: v1.edp.epam.com/v1
-kind: KeycloakClient
-metadata:
-  name: master-admin-1-sa
-  namespace: auth
-spec:
-  clientId: master-admin-1-sa
-  name: Master Admin Service Account
-  realmRef:
-    name: master
-    kind: KeycloakRealm
-  secret: $keycloak-master-1-sa-secret:password
   public: false
   protocol: openid-connect
   serviceAccount:
