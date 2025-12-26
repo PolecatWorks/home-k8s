@@ -104,14 +104,14 @@ spec:
   adminType: serviceAccount
   secret: keycloak-dev-sa            # Secret name
   url: http://keycloak-keycloakx-http.auth.svc.cluster.local/auth   # Keycloak URL
----
-apiVersion: v1.edp.epam.com/v1
-kind: KeycloakRealm
-metadata:
-  name: dev
-  namespace: dev
-spec:
-  realmName: dev
-  keycloakRef:
-    kind: Keycloak
-    name: keycloak
+# ---
+# apiVersion: v1.edp.epam.com/v1
+# kind: KeycloakRealm
+# metadata:
+#   name: dev
+#   namespace: dev
+# spec:
+#   realmName: dev
+#   keycloakRef:
+#     kind: Keycloak
+#     name: keycloak
