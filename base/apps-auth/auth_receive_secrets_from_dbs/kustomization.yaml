@@ -13,3 +13,7 @@ patches:
     patch: |
       - op: add
         path: /subjects/-
+        value:
+          kind: ServiceAccount
+          name: sa-externalsecret
+          namespace: dbs
