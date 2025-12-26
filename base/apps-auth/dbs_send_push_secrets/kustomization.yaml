@@ -12,5 +12,5 @@ patches:
       kind: SecretStore
     patch: |
       - op: replace
-        path: /spec/provider/kubernetes/remotNameSpace
+        path: /spec/provider/kubernetes/remoteNameSpace
         value: auth
