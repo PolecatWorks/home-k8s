@@ -76,21 +76,21 @@ spec:
   updatePolicy: Replace # Pushes and overwrites immediately
   deletionPolicy: Delete # Deletes from provider when PushSecret is gone
   secretStoreRefs:
-    - name: k8s-store-dev-ns
+    - name: push-secrets-to-dev-ns
       kind: SecretStore
   selector:
     secret:
-      name: keycloak-dev-sa # The source secret in 'dbs'
+      name: keycloak-dev-sa # The source secret
   # template:
   #   type: kubernetes.io/dockerconfigjson
   data:
     - match:
-        secretKey: username # The source secret key in secret in 'dbs' namespace
+        secretKey: username # The source secret key
         remoteRef:
-          remoteKey: k8s-store-dev-ns # name of the target secret in the auth namespace
+          remoteKey: keycloak-dev-sa # name of the target secret
           property: username # The key in the target secret
     - match:
         secretKey: password
         remoteRef:
-          remoteKey: k8s-store-dev-ns # Must match the one above to put both in one secret
+          remoteKey: keycloak-dev-sa # Must match the one above to put both in one secret
           property: password
