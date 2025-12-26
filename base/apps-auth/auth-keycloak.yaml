@@ -114,25 +114,6 @@ spec:
         port:
           number: 80
 ---
-apiVersion: external-secrets.io/v1
-kind: SecretStore
-metadata:
-  name: k8s-store-auth-ns
-  namespace: dbs
-spec:
-  provider:
-    kubernetes:
-      remoteNamespace: auth  # The destination
-      server:
-        url: https://kubernetes.default.svc
-        caProvider:
-          type: ConfigMap
-          name: kube-root-ca.crt
-          key: ca.crt
-      auth:
-        serviceAccount:
-          name: sa-externalsecret  # ServiceAccount in 'dbs' namespace with permissions to read secrets in 'auth' namespace
----
 apiVersion: external-secrets.io/v1alpha1
 kind: PushSecret
 metadata:

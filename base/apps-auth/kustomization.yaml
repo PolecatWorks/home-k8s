@@ -7,7 +7,6 @@ resources:
   - namespace.yaml
   - auth_enable_receive_secrets
   - dbs_send_push_secrets
-  # - dbs_enable_push_secrets
   - auth_enable_push_secrets
-  # - auth-keycloak.yaml
+  - auth-keycloak.yaml
   # - auth-master-realm-sa.yaml
