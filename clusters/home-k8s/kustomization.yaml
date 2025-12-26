@@ -6,4 +6,4 @@ resources:
   - infrastructure.yaml
   - controllers.yaml
   - apps-auth.yaml
-  # - apps-dev.yaml
+  - apps-dev.yaml
