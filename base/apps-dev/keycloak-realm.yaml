@@ -10,17 +10,17 @@ spec:
     kind: Keycloak
     name: keycloak
   displayName: Realm for dev environment
----
-apiVersion: generators.external-secrets.io/v1alpha1
-kind: Password
-metadata:
-  name: keycloak-password
-  namespace: dev
-spec:
-  length: 32
-  symbols: 0
-  allowRepeat: true
-  noUpper: false
+# ---
+# apiVersion: generators.external-secrets.io/v1alpha1
+# kind: Password
+# metadata:
+#   name: keycloak-password
+#   namespace: dev
+# spec:
+#   length: 32
+#   symbols: 0
+#   allowRepeat: true
+#   noUpper: false
 ---
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
@@ -80,7 +80,7 @@ spec:
       kind: SecretStore
   selector:
     secret:
-      name: keycloak-dev-sa-secret # The source secret in 'dbs'
+      name: keycloak-dev-sa # The source secret in 'dbs'
   # template:
   #   type: kubernetes.io/dockerconfigjson
   data:
