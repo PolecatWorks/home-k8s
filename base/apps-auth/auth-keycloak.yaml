@@ -1,12 +1,6 @@
 ---
 # Create keycloak db and push secret to auth
 # Deploy Keycloak with an initial user;.,m
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: auth
-  labels:
-    toolkit.fluxcd.io/tenant: security
 ---
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
