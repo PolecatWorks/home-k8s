@@ -1,29 +1,8 @@
 ---
-# Setup the master-sa for the Master Realm
-apiVersion: v1.edp.epam.com/v1
-kind: Keycloak
-metadata:
-  name: keycloak-initial
-  namespace: auth
-spec:
-  secret: keycloak-keycloakx-admin-creds             # Secret name
-  url: http://keycloak-keycloakx-http.auth.svc.cluster.local/auth   # Keycloak URL
----
-apiVersion: v1.edp.epam.com/v1
-kind: KeycloakRealm
-metadata:
-  name: master-initial
-  namespace: auth
-spec:
-  realmName: master
-  keycloakRef:
-    kind: Keycloak
-    name: keycloak-initial
----
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
-  name: keycloak-master-sa-secret
+  name: keycloak-master-0-sa-secret
   namespace: auth
 spec:
   refreshInterval: 1h
@@ -31,7 +10,7 @@ spec:
   target:
     template:
       data:
-        username: master-admin-sa
+        username: master-admin-0-sa
         password: "{{ .password }}"
   dataFrom:
     - sourceRef:
@@ -40,29 +19,25 @@ spec:
           kind: Password
           name: keycloak-password
 ---
-apiVersion: v1.edp.epam.com/v1
-kind: KeycloakClient
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
 metadata:
-  name: master-admin-sa
+  name: keycloak-master-1-sa-secret
   namespace: auth
 spec:
-  clientId: master-admin-sa
-  name: Master Admin Service Account
-  realmRef:
-    name: master-initial
-    kind: KeycloakRealm
-  secret: $keycloak-master-sa-secret:password
-  public: false
-  protocol: openid-connect
-  serviceAccount:
-    enabled: true
-    realmRoles:
-      - offline_access
-      - admin
-    clientRoles:
-      - clientId: master-realm
-        roles:
-          - manage-realm
+  refreshInterval: 1h
+  refreshPolicy: CreatedOnce
+  target:
+    template:
+      data:
+        username: master-admin-1-sa
+        password: "{{ .password }}"
+  dataFrom:
+    - sourceRef:
+        generatorRef:
+          apiVersion: generators.external-secrets.io/v1alpha1
+          kind: Password
+          name: keycloak-password
 ---
 apiVersion: v1.edp.epam.com/v1
 kind: Keycloak
@@ -84,3 +59,51 @@ spec:
   keycloakRef:
     kind: Keycloak
     name: keycloak
+---
+apiVersion: v1.edp.epam.com/v1
+kind: KeycloakClient
+metadata:
+  name: master-admin-0-sa
+  namespace: auth
+spec:
+  clientId: master-admin-0-sa
+  name: Master Admin Service Account
+  realmRef:
+    name: master
+    kind: KeycloakRealm
+  secret: $keycloak-master-sa-secret:password
+  public: false
+  protocol: openid-connect
+  serviceAccount:
+    enabled: true
+    realmRoles:
+      - offline_access
+      - admin
+    clientRoles:
+      - clientId: master-realm
+        roles:
+          - manage-realm
+---
+apiVersion: v1.edp.epam.com/v1
+kind: KeycloakClient
+metadata:
+  name: master-admin-1-sa
+  namespace: auth
+spec:
+  clientId: master-admin-1-sa
+  name: Master Admin Service Account
+  realmRef:
+    name: master
+    kind: KeycloakRealm
+  secret: $keycloak-master-1-sa-secret:password
+  public: false
+  protocol: openid-connect
+  serviceAccount:
+    enabled: true
+    realmRoles:
+      - offline_access
+      - admin
+    clientRoles:
+      - clientId: master-realm
+        roles:
+          - manage-realm
