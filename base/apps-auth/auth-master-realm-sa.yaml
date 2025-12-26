@@ -1,5 +1,6 @@
 ---
-# Use an client realm to
+# Use an client realm to manage the master realm and other realsm. BUT no reliable way to autosync it from keyclaok k8s.
+# Tried building it out as a RealmClient from the initial password. BUT that pattern needs an initial and normal Realm (which clash).
 # ---
 # apiVersion: external-secrets.io/v1
 # kind: ExternalSecret
