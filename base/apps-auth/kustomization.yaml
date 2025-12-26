@@ -10,4 +10,4 @@ resources:
   - auth_enable_push_secrets
   - auth_receive_secrets_from_dbs
   - auth-keycloak.yaml
-  # - auth-master-realm-sa.yaml
+  - auth-master-realm-sa.yaml
