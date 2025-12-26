@@ -9,7 +9,7 @@ spec:
   keycloakRef:
     kind: Keycloak
     name: keycloak
-  displayName: Dev for Service Capture
+  displayName: Realm for dev environment
 ---
 apiVersion: generators.external-secrets.io/v1alpha1
 kind: Password
