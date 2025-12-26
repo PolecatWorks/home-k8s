@@ -118,7 +118,7 @@ spec:
   updatePolicy: Replace # Pushes and overwrites immediately
   deletionPolicy: Delete # Deletes from provider when PushSecret is gone
   secretStoreRefs:
-    - name: k8s-store-auth-ns
+    - name: push-secrets-to-auth-ns
       kind: SecretStore
   selector:
     secret:
