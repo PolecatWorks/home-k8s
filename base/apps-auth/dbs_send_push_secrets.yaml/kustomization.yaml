@@ -6,6 +6,7 @@ metadata:
 resources:
   - ../../eso_send_push_secrets.yaml
 namespace: dbs
+nameSuffix: -auth-ns
 patches:
   - target:
       kind: SecretStore
