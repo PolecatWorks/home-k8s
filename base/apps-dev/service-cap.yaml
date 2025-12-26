@@ -10,7 +10,7 @@ spec:
   updatePolicy: Replace # Pushes and overwrites immediately
   deletionPolicy: Delete # Deletes from provider when PushSecret is gone
   secretStoreRefs:
-    - name: k8s-store-dev-ns
+    - name: push-secrets-to-dev-ns
       kind: SecretStore
   selector:
     secret:
