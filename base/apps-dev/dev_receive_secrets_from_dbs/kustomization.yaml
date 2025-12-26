@@ -1,5 +1,4 @@
 ---
-# Enable secret PUSH from dbs to dev
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 metadata:
@@ -7,14 +6,11 @@ metadata:
 namespace: dev
 resources:
   - ../../eso_receive_secrets.yaml
-# nameSuffix: -from-dbs
+nameSuffix: -from-dbs
 patches:
   - target:
       kind: RoleBinding
     patch: |
-      - op: replace
-        path: /metadata/name
-        value: es-store-role-from-dbs
       - op: add
         path: /subjects/-
         value:
