@@ -1,4 +1,6 @@
 ---
+# Before this can become active you need to create the dev realm in Keycloak.
+# Once it is created then this set of CRDs will manage it.
 # Setup Keycloak and Keycloak Realm in the dev namespace
 apiVersion: v1.edp.epam.com/v1
 kind: Keycloak
