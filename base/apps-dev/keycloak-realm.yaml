@@ -19,6 +19,7 @@ metadata:
   namespace: auth
 spec:
   refreshInterval: 1h
+  refreshPolicy: CreatedOnce
   target:
     template:
       data:
@@ -40,7 +41,6 @@ metadata:
 spec:
   clientId: dev-admin-sa
   name: Dev Admin Service Account
-  refreshPolicy: CreatedOnce
   realmRef:
     name: master
     kind: KeycloakRealm
