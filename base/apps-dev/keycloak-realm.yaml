@@ -1,15 +1,26 @@
 ---
+# Setup Keycloak and Keycloak Realm in the dev namespace
+apiVersion: v1.edp.epam.com/v1
+kind: Keycloak
+metadata:
+  name: keycloak-dev
+  namespace: dev
+spec:
+  adminType: serviceAccount
+  secret: keycloak-dev-sa            # Secret name
+  url: http://keycloak-keycloakx-http.auth.svc.cluster.local/auth   # Keycloak URL
+---
 # Create the dev keycloak realm. This is locked to the auth namespace to ensure develpers cannot access it directly (it is platform owned)
 apiVersion: v1.edp.epam.com/v1
 kind: KeycloakRealm
 metadata:
   name: dev
-  namespace: auth
+  namespace: dev
 spec:
   realmName: dev
   keycloakRef:
     kind: Keycloak
-    name: keycloak
+    name: keycloak-dev
   displayName: Realm for dev environment
 ---
 apiVersion: external-secrets.io/v1
@@ -87,17 +98,6 @@ spec:
         remoteRef:
           remoteKey: keycloak-dev-sa # Must match the one above to put both in one secret
           property: password
----
-# Setup Keycloak and Keycloak Realm in the dev namespace
-apiVersion: v1.edp.epam.com/v1
-kind: Keycloak
-metadata:
-  name: keycloak-dev2
-  namespace: dev
-spec:
-  adminType: serviceAccount
-  secret: keycloak-dev-sa            # Secret name
-  url: http://keycloak-keycloakx-http.auth.svc.cluster.local/auth   # Keycloak URL
 ---
 # This is not allowed in this operator as realmName must be unique across the cluster
 # apiVersion: v1.edp.epam.com/v1
