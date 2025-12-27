@@ -40,6 +40,7 @@ metadata:
 spec:
   clientId: dev-admin-sa
   name: Dev Admin Service Account
+  refreshPolicy: CreatedOnce
   realmRef:
     name: master
     kind: KeycloakRealm
@@ -91,20 +92,21 @@ spec:
 apiVersion: v1.edp.epam.com/v1
 kind: Keycloak
 metadata:
-  name: keycloak-dev
+  name: keycloak-dev2
   namespace: dev
 spec:
   adminType: serviceAccount
   secret: keycloak-dev-sa            # Secret name
   url: http://keycloak-keycloakx-http.auth.svc.cluster.local/auth   # Keycloak URL
-# ---
+---
+# This is not allowed in this operator as realmName must be unique across the cluster
 # apiVersion: v1.edp.epam.com/v1
 # kind: KeycloakRealm
 # metadata:
-#   name: dev
+#   name: dev-realm-link
 #   namespace: dev
 # spec:
 #   realmName: dev
 #   keycloakRef:
 #     kind: Keycloak
-#     name: keycloak
+#     name: keycloak-dev
