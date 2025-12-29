@@ -70,6 +70,7 @@ spec:
           - manage-realm
           - manage-clients
           - manage-events
+          - manage-users
 ---
 # Push the realm cred to allow the dev namespace to use it
 apiVersion: external-secrets.io/v1alpha1
