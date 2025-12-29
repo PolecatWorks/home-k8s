@@ -43,6 +43,8 @@ spec:
   #     interval: 12h
   # https://github.com/weaveworks/weave-gitops/blob/main/charts/gitops-server/values.yaml
   values:
+    config:
+      listOCIRepositories: true
     resources:
       requests:
         cpu: 100m

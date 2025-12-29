@@ -1,6 +1,6 @@
 ---
 # kubectl -n dbs create secret generic mysql-access --from-literal=user=root --from-literal=password=myrootpw --from-literal=mysql-password=mypw --from-literal=mysql-root-password=myrootpw
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: mysql
@@ -27,7 +27,7 @@ spec:
         labels:
           release: prometheus-stack
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: phpmyadmin
