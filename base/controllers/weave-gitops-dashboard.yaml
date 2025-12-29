@@ -36,5 +36,21 @@ spec:
   values:
     adminUser:
       create: true
-      passwordHash: $2a$10$7WCg5ctI1JLUj3KP0Y77Lenz3gAueQ/yiYVqwlTlt0/4eKt1LRS0G
+      passwordHash: $2a$10$P/tHQ1DNFXdvX0zRGA8LPeSOyb0JXq9rP3fZ4W8HGTpLV7qHDlWhe
       username: admin
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: weave-gitops
+  namespace: flux-system
+spec:
+  hosts:
+  - weave.k8s
+  gateways:
+  - istio-ingress/k8s-gateway
+  - mesh # applies to all the sidecars in the mesh
+  http:
+  - route:
+    - destination:
+        host: ww-gitops-weave-gitops.flux-system.svc.cluster.local
