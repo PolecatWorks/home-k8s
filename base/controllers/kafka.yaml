@@ -99,8 +99,8 @@ spec:
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
-  name: longhorn
-  namespace: longhorn-system
+  name: controlcenter
+  namespace: confluent
 spec:
   hosts:
   - controlcenter.k8s
