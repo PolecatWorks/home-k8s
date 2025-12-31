@@ -34,4 +34,8 @@ spec:
         kind: HelmRepository
         name: confluentinc
   interval: 50m
-  values: {}
+  values:
+    namespaced: false
+    namespaceList:
+      - confluent-operator
+      - confluent
