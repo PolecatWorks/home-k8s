@@ -1,4 +1,34 @@
 ---
+# Push the DB cred to allow the service-cap app to access the DB
+apiVersion: external-secrets.io/v1alpha1
+kind: PushSecret
+metadata:
+  name: push-db0-recon-user-to-dev-ns
+  namespace: dbs
+spec:
+  refreshInterval: 1m0s
+  updatePolicy: Replace # Pushes and overwrites immediately
+  deletionPolicy: Delete # Deletes from provider when PushSecret is gone
+  secretStoreRefs:
+    - name: push-secrets-to-dev-ns
+      kind: SecretStore
+  selector:
+    secret:
+      name: db0-recon-user # The source secret in 'dbs'
+  # template:
+  #   type: kubernetes.io/dockerconfigjson
+  data:
+    - match:
+        secretKey: username # The source secret key in secret in 'dbs' namespace
+        remoteRef:
+          remoteKey: db0-recon-user # name of the target secret in the auth namespace
+          property: username # The key in the target secret
+    - match:
+        secretKey: password
+        remoteRef:
+          remoteKey: db0-recon-user # Must match the one above to put both in one secret
+          property: password
+---
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
 metadata:
