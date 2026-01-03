@@ -112,8 +112,18 @@ spec:
     #       inRoles: []
     #         # - pg_monitor
     #         # - pg_signal_backend
+
+        - name: db0_recon
+          ensure: present
+          comment: Recon DB user
+          login: true
+          superuser: false
+          passwordSecret:
+            name: db0-recon-user
     databases:
       - name: keycloak
         owner: db0_keycloak
       - name: service_cap
         owner: db0_service_cap
+      - name: recon
+        owner: db0_recon

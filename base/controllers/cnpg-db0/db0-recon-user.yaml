@@ -1,0 +1,23 @@
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: db0-recon-user
+  namespace: dbs
+spec:
+  refreshInterval: 24h
+  target:
+    creationPolicy: Merge
+    template:
+      metadata:
+        labels:
+          cnpg.io/reload: "true"
+      data:
+        username: db0_recon
+        password: "{{ .password }}"
+  dataFrom:
+    - sourceRef:
+        generatorRef:
+          apiVersion: generators.external-secrets.io/v1alpha1
+          kind: Password
+          name: db0-password
