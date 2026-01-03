@@ -6,9 +6,9 @@ metadata:
   namespace: dbs
 spec:
   refreshInterval: 24h
+  refreshPolicy: CreatedOnce
   target:
     creationPolicy: Owner
-    refreshPolicy: CreatedOnce
     template:
       metadata:
         labels:
