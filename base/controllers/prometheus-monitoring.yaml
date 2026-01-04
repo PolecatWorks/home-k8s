@@ -1,0 +1,20 @@
+---
+# Expecting a prometheus deploy CRD to be present
+# ---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: prometheus
+  namespace: prometheus-stack
+spec:
+  hosts:
+  - prometheus.k8s
+  gateways:
+  - istio-ingress/k8s-gateway
+  - mesh # applies to all the sidecars in the mesh
+  http:
+  - route:
+    - destination:
+        host: prometheus-stack-kube-prom-prometheus.prometheus-stack.svc.cluster.local
+        port:
+          number: 9090
