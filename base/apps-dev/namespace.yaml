@@ -7,3 +7,4 @@ metadata:
     toolkit.fluxcd.io/tenant: app
     istio-injection: enabled
     app.kubernetes.io/part-of: flux
+    monitoring/prometheus-stack: dev

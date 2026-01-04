@@ -5,6 +5,7 @@ metadata:
   name: prometheus-stack
   labels:
     toolkit.fluxcd.io/tenant: monitoring
+    monitoring/prometheus-stack: operator
 ---
 # helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 apiVersion: source.toolkit.fluxcd.io/v1beta2
@@ -36,7 +37,6 @@ spec:
       retries: 3
   # Default values
   # https://github.com/stefanprodan/podinfo/blob/master/charts/podinfo/values.yaml
-  values: {}
   # matchLabels and matchExpressions are always ANDed and so we need to match our release label
     # prometheus:
     #   prometheusSpec:
