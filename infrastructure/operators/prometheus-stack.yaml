@@ -44,6 +44,10 @@ spec:
           matchExpressions:
             - key: monitoring/prometheus-stack
               operator: Exists
+        podMonitorNamespaceSelector:
+          matchExpressions:
+            - key: monitoring/prometheus-stack
+              operator: Exists
   # matchLabels and matchExpressions are always ANDed and so we need to match our release label
     # prometheus:
     #   prometheusSpec:
