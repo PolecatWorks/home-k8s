@@ -15,6 +15,8 @@ metadata:
   namespace: confluent
 spec:
   dataVolumeCapacity: 10G
+  storageClass:
+    name: longhorn-single
   image:
     application: docker.io/confluentinc/cp-server:7.9.0
     init: confluentinc/confluent-init-container:2.11.0
@@ -32,6 +34,8 @@ spec:
       clusterRef:
         name: kraftcontroller
   dataVolumeCapacity: 10G
+  storageClass:
+    name: longhorn-single
   image:
     application: docker.io/confluentinc/cp-server:7.9.0
     init: confluentinc/confluent-init-container:2.11.0
@@ -43,7 +47,7 @@ metadata:
   name: controlcenter
   namespace: confluent
 spec:
-  replicas: 1
+  replicas: 2
   image:
     application: confluentinc/cp-enterprise-control-center:7.9.0
     init: confluentinc/confluent-init-container:2.11.0
