@@ -1,0 +1,30 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: rusty-kafka
+  namespace: dev
+spec:
+  interval: 1m0s
+  url: https://github.com/PolecatWorks/rusty-kafka.git
+  ref:
+    branch: main
+  # secretRef:
+  #   name: service-capture-git
+# Check token is valid
+# curl -sS -f -I -H "Authorization: ${FLUX_POLECATWORKS_GITHUB_TOKEN}" https://api.github.com
+# kubectl -n service-capture create secret generic service-capture-git --from-literna=username=git --from-literal=password="${FLUX_POLECATWORKS_GITHUB_TOKEN}"
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: rusty-kafka
+  namespace: dev
+spec:
+  interval: 10m0s
+  path: ./fluxcd-dev
+  targetNamespace: dev
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: rusty-kafka
