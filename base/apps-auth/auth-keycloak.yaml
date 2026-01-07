@@ -56,6 +56,7 @@ spec:
     remediation:
       retries: 3
   values:
+    replicas: 2
     args:
       - "--verbose"
       - "start"
