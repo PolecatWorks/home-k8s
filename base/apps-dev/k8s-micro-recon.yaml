@@ -71,6 +71,7 @@ spec:
   configs:
     cleanup.policy: delete
     retention.ms: "36000000" # 1 hour
+    delete.retention.ms: "600000" # 10 minutes
 ---
 apiVersion: platform.confluent.io/v1beta1
 kind: KafkaTopic
@@ -84,7 +85,7 @@ spec:
   replicas: 3
   partitionCount: 79
   configs:
-    cleanup.policy: delete
+    cleanup.policy: compact
     retention.ms: "36000000" # 1 hour
 
 ---
