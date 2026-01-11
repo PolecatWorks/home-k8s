@@ -8,7 +8,7 @@ allowVolumeExpansion: true
 parameters:
   numberOfReplicas: "1"
   #   dataEngine: v1
-  #   dataLocality: disabled
+  dataLocality: best-effort
   #   disableRevisionCounter: "true"
   #   fromBackup: ""
   #   fsType: ext4
