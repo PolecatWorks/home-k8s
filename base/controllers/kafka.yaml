@@ -174,7 +174,9 @@ spec:
             bootstrapServers: kafka:9092
             schemaRegistry: http://schemaregistry.confluent.svc.cluster.local:8081
             ksqldb-server: http://ksqldb.confluent.svc.cluster.local:8088
-            kafka-connect: http://connect.confluent.svc.cluster.local:8083
+            kafka-connect:
+              - name: First
+                address: http://connect.confluent.svc.cluster.local:8083
       auth:
         type: disabled
       management:
