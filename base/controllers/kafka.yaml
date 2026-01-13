@@ -75,7 +75,7 @@ metadata:
   name: controlcenter
   namespace: confluent
 spec:
-  replicas: 2
+  replicas: 1
   podTemplate:
     probe:
       liveness:
@@ -140,6 +140,43 @@ spec:
     name: kafka
   kafkaRest:
     endpoint: http://kafka.confluent.svc.cluster.local:8090
+---
+# https://ui.docs.kafbat.io/configuration/helm-charts/quick-start
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: kafbat-ui
+  namespace: confluent
+spec:
+  interval: 60m
+  url: https://kafbat.github.io/helm-charts
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kafbat-ui
+  namespace: confluent
+spec:
+  releaseName: kafbat-ui
+  chart:
+    spec:
+      chart: kafka-ui
+      sourceRef:
+        kind: HelmRepository
+        name: kafbat-ui
+  interval: 50m
+  values:
+    yamlApplicationConfig:
+      kafka:
+        clusters:
+          - name: kafka
+            bootstrapServers:  kafka:9092
+      auth:
+        type: disabled
+      management:
+        health:
+          ldap:
+            enabled: false
 ---
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
