@@ -181,17 +181,17 @@ spec:
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
-  name: controlcenter
+  name: kafbat-ui
   namespace: confluent
 spec:
   hosts:
-  - controlcenter.k8s
+  - kafbat-ui.k8s
   gateways:
   - istio-ingress/k8s-gateway
   - mesh # applies to all the sidecars in the mesh
   http:
   - route:
     - destination:
-        host: controlcenter.confluent.svc.cluster.local
+        host: kafbat-ui-kafka-ui.confluent.svc.cluster.local
         port:
-          number: 9021
+          number: 80
