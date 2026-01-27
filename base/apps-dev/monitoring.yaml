@@ -17,6 +17,7 @@ spec:
           - service-capture-backend
           - k8s-micro
           - nginx-view
+          - push-cache-backend
   endpoints:
     - port: http-envoy-prom # Matches the name of the port in your POD
       path: /stats/prometheus
