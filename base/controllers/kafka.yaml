@@ -22,6 +22,17 @@ spec:
     init: confluentinc/confluent-init-container:2.11.1
   replicas: 3
   clusterID: MzY5NTAwZWQtYTJjMy00Zg
+  podTemplate:
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                    - kraftcontroller
+            topologyKey: kubernetes.io/hostname
 ---
 apiVersion: platform.confluent.io/v1beta1
 kind: Kafka
@@ -29,6 +40,17 @@ metadata:
   name: kafka
   namespace: confluent
 spec:
+  podTemplate:
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                    - kafka
+            topologyKey: kubernetes.io/hostname
   dependencies:
     kRaftController:
       clusterRef:
@@ -99,12 +121,12 @@ spec:
 #     - name: connect
 #       url: http://connect.confluent.svc.cluster.local:8083
 
-    # ksqldb:
-    # - name: ksqldb
-    #   url: http://ksqldb.confluent.svc.cluster.local:8088
-    # connect:
-    # - name: connect
-    #   url: http://connect.confluent.svc.cluster.local:8083
+# ksqldb:
+# - name: ksqldb
+#   url: http://ksqldb.confluent.svc.cluster.local:8088
+# connect:
+# - name: connect
+#   url: http://connect.confluent.svc.cluster.local:8083
 ---
 apiVersion: platform.confluent.io/v1beta1
 kind: SchemaRegistry
@@ -116,6 +138,18 @@ spec:
   image:
     application: confluentinc/cp-schema-registry:7.9.1
     init: confluentinc/confluent-init-container:2.11.1
+  podTemplate:
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                    - schemaregistry
+            topologyKey: kubernetes.io/hostname
+
 ---
 apiVersion: platform.confluent.io/v1beta1
 kind: KafkaRestProxy
@@ -123,6 +157,18 @@ metadata:
   name: kafkarestproxy
   namespace: confluent
 spec:
+  podTemplate:
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                    - kafkarestproxy
+            topologyKey: kubernetes.io/hostname
+
   replicas: 2
   image:
     application: confluentinc/cp-kafka-rest:7.9.1
@@ -191,13 +237,13 @@ metadata:
   namespace: confluent
 spec:
   hosts:
-  - kafbat-ui.k8s
+    - kafbat-ui.k8s
   gateways:
-  - istio-ingress/k8s-gateway
-  - mesh # applies to all the sidecars in the mesh
+    - istio-ingress/k8s-gateway
+    - mesh # applies to all the sidecars in the mesh
   http:
-  - route:
-    - destination:
-        host: kafbat-ui-kafka-ui.confluent.svc.cluster.local
-        port:
-          number: 80
+    - route:
+        - destination:
+            host: kafbat-ui-kafka-ui.confluent.svc.cluster.local
+            port:
+              number: 80
