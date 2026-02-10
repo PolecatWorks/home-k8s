@@ -22,4 +22,4 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: mfe-shell
+    name: angry-agent
