@@ -30,6 +30,7 @@ spec:
         kind: HelmRepository
         name: otwld
   interval: 50m
+  timeout: 20m
   install:
     remediation:
       retries: 3
