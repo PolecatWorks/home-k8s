@@ -44,12 +44,12 @@ spec:
           - qwen2.5-coder:14b
     resources:
       requests:
-        memory: 16Gi
+        memory: 86Gi
         cpu: 2
       # limits:
       #   memory: 8Gi
       #   cpu: 4
     persistentVolume:
       enabled: true
-      storageClass: longhorn-single
-      size: 20Gi
+      # storageClass: longhorn-single
+      size: 30Gi
