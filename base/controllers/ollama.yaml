@@ -45,7 +45,7 @@ spec:
           - qwen2.5-coder:14b
     resources:
       requests:
-        memory: 86Gi
+        memory: 8Gi
         cpu: 2
       # limits:
       #   memory: 8Gi
