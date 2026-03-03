@@ -1,9 +1,10 @@
 ---
-apiVersion: source.toolkit.fluxcd.io/v1beta2
+apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
   annotations:
-    metadata.weave.works/description: This is the source location for the Weave GitOps
+    metadata.weave.works/description:
+      This is the source location for the Weave GitOps
       Dashboard's helm chart.
   labels:
     app.kubernetes.io/component: ui
@@ -21,7 +22,8 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   annotations:
-    metadata.weave.works/description: This is the Weave GitOps Dashboard.  It provides
+    metadata.weave.works/description:
+      This is the Weave GitOps Dashboard.  It provides
       a simple way to get insights into your GitOps workloads.
   name: ww-gitops
   namespace: flux-system
@@ -46,11 +48,11 @@ metadata:
   namespace: flux-system
 spec:
   hosts:
-  - weave.k8s
+    - weave.k8s
   gateways:
-  - istio-ingress/k8s-gateway
-  - mesh # applies to all the sidecars in the mesh
+    - istio-ingress/k8s-gateway
+    - mesh # applies to all the sidecars in the mesh
   http:
-  - route:
-    - destination:
-        host: ww-gitops-weave-gitops.flux-system.svc.cluster.local
+    - route:
+        - destination:
+            host: ww-gitops-weave-gitops.flux-system.svc.cluster.local
