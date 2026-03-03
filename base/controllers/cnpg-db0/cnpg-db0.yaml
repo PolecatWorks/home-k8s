@@ -109,9 +109,9 @@ spec:
           superuser: false
           passwordSecret:
             name: db0-service-cap-user
-    #       inRoles: []
-    #         # - pg_monitor
-    #         # - pg_signal_backend
+        #       inRoles: []
+        #         # - pg_monitor
+        #         # - pg_signal_backend
 
         - name: db0_recon
           ensure: present
@@ -120,6 +120,14 @@ spec:
           superuser: false
           passwordSecret:
             name: db0-recon-user
+
+        - name: db0_angry_agent
+          ensure: present
+          comment: Angry Agent DB user
+          login: true
+          superuser: false
+          passwordSecret:
+            name: db0-angry-agent-user
     databases:
       - name: keycloak
         owner: db0_keycloak
@@ -127,3 +135,5 @@ spec:
         owner: db0_service_cap
       - name: recon
         owner: db0_recon
+      - name: angry_agent
+        owner: db0_angry_agent
