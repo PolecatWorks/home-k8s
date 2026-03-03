@@ -8,7 +8,7 @@ metadata:
     monitoring/prometheus-stack: operator
 ---
 # helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-apiVersion: source.toolkit.fluxcd.io/v1beta2
+apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
   name: prometheus-community
@@ -49,11 +49,11 @@ spec:
             - key: monitoring/prometheus-stack
               operator: Exists
   # matchLabels and matchExpressions are always ANDed and so we need to match our release label
-    # prometheus:
-    #   prometheusSpec:
-    #     serviceMonitorSelector:
-    #       # matchLabels:
-    #       #   release: prometheus-stack
-    #       matchExpressions:
-    #       - { key: release, operator: In, values: [prometheus-stack] }
-    #       # - { key: monitor, operator: In, values: [prometheus-stack] }
+  # prometheus:
+  #   prometheusSpec:
+  #     serviceMonitorSelector:
+  #       # matchLabels:
+  #       #   release: prometheus-stack
+  #       matchExpressions:
+  #       - { key: release, operator: In, values: [prometheus-stack] }
+  #       # - { key: monitor, operator: In, values: [prometheus-stack] }
