@@ -5,9 +5,9 @@ metadata:
   name: db0-angry-agent-user
   namespace: dbs
 spec:
-  refreshInterval: 24h
+  refreshInterval: "0"
   target:
-    creationPolicy: Merge
+    creationPolicy: Owner
     template:
       metadata:
         labels:
