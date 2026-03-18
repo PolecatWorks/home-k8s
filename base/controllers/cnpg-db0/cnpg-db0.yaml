@@ -81,6 +81,9 @@ spec:
   interval: 50m
   values:
     cluster:
+      postgresql:
+        parameters:
+          shared_preload_libraries: "vector"
       roles:
         # 1. The Schema Update User (Owner)
         - name: schema_mgr
@@ -135,5 +138,9 @@ spec:
         owner: db0_service_cap
       - name: recon
         owner: db0_recon
+        extensions:
+          - name: vector
       - name: angry_agent
         owner: db0_angry_agent
+        extensions:
+          - name: vector
