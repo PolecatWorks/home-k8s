@@ -86,7 +86,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: actions-runner-controller-charts
-        namespace: arc-systems
+        namespace: arc-runners
   interval: 1h0m0s
   install:
     remediation:
