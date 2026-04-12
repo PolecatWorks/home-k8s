@@ -105,3 +105,27 @@ spec:
 # type: Opaque
 # data:
 #   github_token: <BASE64_PAT>
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: arc-runners # Where your service lives
+  name: runner-k8s-manager
+rules:
+  - apiGroups: ["", "apps"]
+    resources: ["services", "deployments", "pods"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  namespace: arc-runners
+  name: runner-k8s-manager-binding
+subjects:
+  - kind: ServiceAccount
+    name: default # ARC runners usually use 'default' unless specified in Helm
+    namespace: arc-runners
+roleRef:
+  kind: Role
+  name: runner-k8s-manager
+  apiGroup: rbac.authorization.k8s.io
