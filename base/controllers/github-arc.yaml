@@ -109,37 +109,6 @@ spec:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  namespace: arc-runners # Where your service lives
-  name: runner-k8s-manager
-rules:
-  - apiGroups: [""]
-    # Helm needs secrets to manage releases; pods/services for the app itself
-    resources: ["secrets", "pods", "services", "configmaps", "endpoints"]
-    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
-  - apiGroups: ["apps"]
-    resources: ["deployments", "statefulsets", "replicasets"]
-    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
-  - apiGroups: ["batch"]
-    resources: ["jobs"]
-    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
-metadata:
-  namespace: arc-runners
-  name: runner-k8s-manager-binding
-subjects:
-  - kind: ServiceAccount
-    name: default # ARC runners usually use 'default' unless specified in Helm
-    namespace: arc-runners
-roleRef:
-  kind: Role
-  name: runner-k8s-manager
-  apiGroup: rbac.authorization.k8s.io
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
-metadata:
   namespace: arc-runners # Change this if 'angry-agent' is elsewhere
   name: runner-k8s-manager
 rules:
