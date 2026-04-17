@@ -1,0 +1,7 @@
+kind: Project
+apiVersion: garden.io/v2
+name: central-base
+
+environments:
+  - name: default
+  - name: pr
