@@ -111,7 +111,7 @@ kind: ClusterRole
 metadata:
   name: angry-agent-runner-cluster-manager
 rules:
-  - apiGroups: ["", "apps", "batch", "networking.k8s.io", "autoscaling"]
+  - apiGroups: ["", "apps", "batch", "networking.k8s.io", "autoscaling", "external-secrets.io"]
     resources: ["*"]
     verbs: ["*"]
 ---
