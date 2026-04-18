@@ -112,6 +112,9 @@ metadata:
   namespace: arc-runners # Change this if 'angry-agent' is elsewhere
   name: runner-k8s-manager
 rules:
+  - apiGroups: [""] # "" indicates the core API group
+    resources: ["namespaces", "nodes"]
+    verbs: ["get", "list"]
   - apiGroups: [""]
     # Helm needs secrets to manage releases; pods/services for the app itself
     resources: ["secrets", "pods", "services", "configmaps", "endpoints"]
