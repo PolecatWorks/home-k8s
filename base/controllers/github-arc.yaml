@@ -112,9 +112,6 @@ metadata:
   namespace: arc-runners # Change this if 'angry-agent' is elsewhere
   name: runner-k8s-manager
 rules:
-  - apiGroups: [""] # "" indicates the core API group
-    resources: ["namespaces", "nodes"]
-    verbs: ["get", "list"]
   - apiGroups: [""]
     # Helm needs secrets to manage releases; pods/services for the app itself
     resources: ["secrets", "pods", "services", "configmaps", "endpoints"]
@@ -138,5 +135,28 @@ subjects:
     namespace: arc-runners
 roleRef:
   kind: Role
+  name: runner-k8s-manager
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: runner-k8s-manager
+rules:
+  - apiGroups: [""]
+    resources: ["nodes", "namespaces"]
+    verbs: ["get", "list"]
+---
+# Bind it to your existing SA
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: runner-k8s-manager-binding
+subjects:
+  - kind: ServiceAccount
+    name: polecatworks-runner-gha-rs-no-permission
+    namespace: arc-runners
+roleRef:
+  kind: ClusterRole
   name: runner-k8s-manager
   apiGroup: rbac.authorization.k8s.io
