@@ -66,18 +66,6 @@ configs:
                     remoteKey: ${inputs.sourceSecretName}
                     property: password
         - apiVersion: rbac.authorization.k8s.io/v1
-          kind: Role
-          metadata:
-            name: eso-store-push-role
-            namespace: ${inputs.remoteNamespace}
-          rules:
-            - apiGroups: [""]
-              resources: ["secrets"]
-              verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
-            - apiGroups: ["authorization.k8s.io"]
-              resources: ["selfsubjectrulesreviews"]
-              verbs: ["create"]
-        - apiVersion: rbac.authorization.k8s.io/v1
           kind: RoleBinding
           metadata:
             name: eso-receive-secrets
@@ -85,8 +73,8 @@ configs:
           subjects:
             - kind: ServiceAccount
               name: sa-externalsecret
-              namespace: ${inputs.sourceNamespace}
+              namespace: ${inputs.sourceNamespace} # dbs
           roleRef:
-            kind: Role
-            name: eso-store-push-role
+            kind: ClusterRole
+            name: admin
             apiGroup: rbac.authorization.k8s.io
