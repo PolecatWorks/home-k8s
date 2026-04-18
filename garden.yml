@@ -13,7 +13,7 @@ environments:
 
 ---
 kind: ConfigTemplate
-name: PushSecretConfig
+name: push-secret-config
 inputsSchemaPath: templates/push-secret-schema.json
 configs:
   - kind: Deploy
@@ -65,12 +65,3 @@ configs:
                   remoteRef:
                     remoteKey: ${inputs.sourceSecretName}
                     property: password
-
----
-kind: RenderTemplate
-template: PushSecretConfig
-name: angry-agent-secrets
-inputs:
-  sourceSecretName: db0-angry-agent-user
-  sourceNamespace: dbs
-  remoteNamespace: ${var.pr-namespace}
