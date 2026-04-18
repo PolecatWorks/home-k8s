@@ -2,6 +2,75 @@ kind: Project
 apiVersion: garden.io/v2
 name: central-base
 
+variables:
+  pr-number: ${local.env.PR_NUMBER || "local"}
+  pr-namespace: angry-agent-pr-${var.pr-number}
+
 environments:
   - name: default
   - name: pr
+    defaultNamespace: ${var.pr-namespace}
+
+---
+kind: ConfigTemplate
+name: PushSecretConfig
+inputsSchemaPath: templates/push-secret-schema.json
+configs:
+  - kind: Deploy
+    type: kubernetes
+    name: ${parent.name}
+    spec:
+      manifests:
+        - apiVersion: external-secrets.io/v1
+          kind: SecretStore
+          metadata:
+            name: push-secrets-to-${inputs.remoteNamespace}
+            namespace: ${inputs.sourceNamespace}
+          spec:
+            provider:
+              kubernetes:
+                remoteNamespace: ${inputs.remoteNamespace}
+                server:
+                  url: https://kubernetes.default.svc
+                caProvider:
+                  type: ConfigMap
+                  name: kube-root-ca.crt
+                  key: ca.crt
+                auth:
+                  serviceAccount:
+                    name: sa-externalsecret
+        - apiVersion: external-secrets.io/v1alpha1
+          kind: PushSecret
+          metadata:
+            name: push-${inputs.sourceSecretName}-to-${inputs.remoteNamespace}
+            namespace: ${inputs.sourceNamespace}
+          spec:
+            refreshInterval: 1m0s
+            updatePolicy: Replace
+            deletionPolicy: Delete
+            secretStoreRefs:
+              - name: push-secrets-to-${inputs.remoteNamespace}
+                kind: SecretStore
+            selector:
+              secret:
+                name: ${inputs.sourceSecretName}
+            data:
+              - match:
+                  secretKey: username
+                  remoteRef:
+                    remoteKey: ${inputs.sourceSecretName}
+                    property: username
+              - match:
+                  secretKey: password
+                  remoteRef:
+                    remoteKey: ${inputs.sourceSecretName}
+                    property: password
+
+---
+kind: RenderTemplate
+template: PushSecretConfig
+name: angry-agent-secrets
+inputs:
+  sourceSecretName: db0-angry-agent-user
+  sourceNamespace: dbs
+  remoteNamespace: ${var.pr-namespace}
