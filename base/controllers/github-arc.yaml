@@ -109,33 +109,21 @@ spec:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: runner-k8s-manager
+  name: angry-agent-runner-cluster-manager
 rules:
-  - apiGroups: [""]
-    resources: ["secrets", "pods", "services", "configmaps", "endpoints", "namespaces"]
-    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
-  - apiGroups: [""]
-    resources: ["nodes"]
-    verbs: ["get", "list"]
-  - apiGroups: ["apps"]
-    resources: ["deployments", "statefulsets", "replicasets"]
-    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
-  - apiGroups: ["batch"]
-    resources: ["jobs"]
-    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
-  - apiGroups: ["networking.k8s.io"]
-    resources: ["ingresses"]
-    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["", "apps", "batch", "networking.k8s.io", "autoscaling"]
+    resources: ["*"]
+    verbs: ["*"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: runner-k8s-manager-binding
+  name: angry-agent-runner-cluster-manager-binding
 subjects:
   - kind: ServiceAccount
     name: polecatworks-runner-gha-rs-no-permission
     namespace: arc-runners
 roleRef:
   kind: ClusterRole
-  name: runner-k8s-manager
+  name: angry-agent-runner-cluster-manager
   apiGroup: rbac.authorization.k8s.io
