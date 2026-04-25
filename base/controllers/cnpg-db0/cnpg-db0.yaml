@@ -131,6 +131,14 @@ spec:
           superuser: false
           passwordSecret:
             name: db0-angry-agent-user
+
+        - name: db0_sward_warden
+          ensure: present
+          comment: Sward Warden DB user
+          login: true
+          superuser: false
+          passwordSecret:
+            name: db0-sward-warden-user
     databases:
       - name: keycloak
         owner: db0_keycloak
@@ -144,3 +152,5 @@ spec:
         owner: db0_angry_agent
         extensions:
           - name: vector
+      - name: sward_warden
+        owner: db0_sward_warden

@@ -7,3 +7,4 @@ resources:
   - controllers.yaml
   - apps-auth.yaml
   - apps-dev.yaml
+  - sward-warden.yaml
