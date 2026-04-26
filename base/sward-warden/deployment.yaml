@@ -7,6 +7,8 @@ metadata:
 spec:
   interval: 1m0s
   url: https://github.com/PolecatWorks/sward-warden.git
+  secretRef:
+    name: sw-gh-pat
   ref:
     branch: main
 ---
