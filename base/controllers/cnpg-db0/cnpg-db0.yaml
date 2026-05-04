@@ -82,8 +82,8 @@ spec:
   values:
     cluster:
       postgresql:
-        parameters:
-          shared_preload_libraries: "vector"
+        shared_preload_libraries:
+          - vector
       roles:
         # 1. The Schema Update User (Owner)
         - name: schema_mgr
