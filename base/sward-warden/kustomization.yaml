@@ -6,7 +6,6 @@ resources:
   - secret-store.yaml
   - secrets.yaml
   - deployment.yaml
-  - auth_enable_push_secrets
   - auth_send_push_secrets
   - dbs_send_push_secrets
   - dev_enable_receive_secrets
