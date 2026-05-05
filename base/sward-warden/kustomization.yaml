@@ -6,3 +6,4 @@ resources:
   - secret-store.yaml
   - secrets.yaml
   - deployment.yaml
+  - enablers.yaml
