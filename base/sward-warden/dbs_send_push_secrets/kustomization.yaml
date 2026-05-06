@@ -5,7 +5,6 @@ metadata:
   name: sward-warden-dev-send_push_secrets
 resources:
   - ../../eso_send_push_secrets.yaml
-  - push-secret.yaml
 namespace: dbs
 nameSuffix: -sward-warden-dev-ns
 patches:
