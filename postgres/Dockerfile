@@ -2,6 +2,7 @@ FROM ghcr.io/cloudnative-pg/postgresql:16
 
 USER root
 
+
 # Install PostGIS
 # Note: pgvector is already bundled in the standard CloudNativePG 16 image.
 RUN apt-get update && \
