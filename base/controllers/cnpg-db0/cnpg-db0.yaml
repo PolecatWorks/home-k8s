@@ -85,7 +85,7 @@ spec:
       postgresql:
         shared_preload_libraries:
           - vector
-          - postgis
+          - postgis-3
       roles:
         # 1. The Schema Update User (Owner)
         - name: schema_mgr
