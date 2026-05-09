@@ -95,6 +95,7 @@ jobs:
             type=ref,event=pr
             type=raw,value=pr-${{ github.event.pull_request.number }},enable=${{ github.event_name == 'pull_request' }}
             type=raw,value=sha-${{ env.POSTGRES_SHA }}
+            type=raw,value=16,enable=${{ github.ref_name == 'main' }}
 
       - name: Build and push Docker image
         id: build
@@ -171,6 +172,7 @@ jobs:
             type=raw,value=pr-${{ github.event.pull_request.number }},enable=${{ github.event_name == 'pull_request' }}
             type=raw,value=main,enable=${{ github.ref_name == 'main' }}
             type=raw,value=latest,enable=${{ github.ref_name == 'main' }}
+            type=raw,value=16,enable=${{ github.ref_name == 'main' }}
             type=raw,value=sha-${{ env.POSTGRES_SHA }}
 
       - name: Set up Docker Buildx

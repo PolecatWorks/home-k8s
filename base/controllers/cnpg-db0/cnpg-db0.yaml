@@ -81,7 +81,7 @@ spec:
   interval: 50m
   values:
     cluster:
-      imageName: ghcr.io/polecatworks/home-k8s-postgres:main
+      imageName: ghcr.io/polecatworks/home-k8s-postgres:16
       postgresql:
         shared_preload_libraries:
           - vector
