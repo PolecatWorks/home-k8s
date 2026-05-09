@@ -81,9 +81,11 @@ spec:
   interval: 50m
   values:
     cluster:
+      imageName: ghcr.io/cloudnative-pg/postgis:16
       postgresql:
         shared_preload_libraries:
           - vector
+          - postgis
       roles:
         # 1. The Schema Update User (Owner)
         - name: schema_mgr
@@ -154,3 +156,5 @@ spec:
           - name: vector
       - name: sward_warden
         owner: db0_sward_warden
+        extensions:
+          - name: postgis
