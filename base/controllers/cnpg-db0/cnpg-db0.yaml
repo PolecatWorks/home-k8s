@@ -84,8 +84,8 @@ spec:
       imageName: ghcr.io/cloudnative-pg/postgis:16
       postgresql:
         shared_preload_libraries:
-          - vector
           - postgis
+          # - vector
       roles:
         # 1. The Schema Update User (Owner)
         - name: schema_mgr
