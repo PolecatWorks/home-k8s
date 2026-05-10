@@ -3,7 +3,7 @@ apiVersion: telemetry.istio.io/v1alpha1
 kind: Telemetry
 metadata:
   name: ns-default
-  namespace: sward-warden
+  namespace: sward-warden-dev
 spec:
   accessLogging:
     - providers:
