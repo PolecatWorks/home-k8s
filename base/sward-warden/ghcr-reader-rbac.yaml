@@ -1,0 +1,41 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ghcr-secret-reader-sa
+  namespace: sward-warden-dev
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: ghcr-secret-reader-role
+  namespace: sward-warden-dev
+rules:
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: bind-ghcr-secret-reader
+  namespace: sward-warden-dev
+subjects:
+- kind: ServiceAccount
+  name: ghcr-secret-reader-sa
+  namespace: sward-warden-dev
+roleRef:
+  kind: Role
+  name: ghcr-secret-reader-role
+  apiGroup: rbac.authorization.k8s.io
+---
+# In Kubernetes 1.24+, ServiceAccount tokens are no longer automatically created as Secrets.
+# We explicitly create a long-lived Secret token to use in the PR namespace's SecretStore.
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ghcr-secret-reader-token
+  namespace: sward-warden-dev
+  annotations:
+    kubernetes.io/service-account.name: ghcr-secret-reader-sa
+type: kubernetes.io/service-account-token
