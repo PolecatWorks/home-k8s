@@ -1,0 +1,23 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: prometheus-adapter
+  namespace: prometheus-stack
+spec:
+  releaseName: prometheus-adapter
+  chart:
+    spec:
+      chart: prometheus-adapter
+      sourceRef:
+        kind: HelmRepository
+        namespace: prometheus-stack
+        name: prometheus-community
+  interval: 50m
+  install:
+    remediation:
+      retries: 3
+  values:
+    prometheus:
+      url: http://prometheus-stack-kube-prom-prometheus.prometheus-stack.svc
+      port: 9090
