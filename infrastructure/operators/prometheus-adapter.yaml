@@ -31,7 +31,9 @@ spec:
             )
           nodeQuery: |
             sum by (<<.GroupBy>>) (
-              rate(node_cpu_seconds_total{mode!="idle",mode!="iowait",mode!="steal",<<.LabelMatchers>>}[3m])
+              rate(node_cpu_seconds_total{mode!="idle",mode!="iowait",mode!="steal"}[3m])
+              * on(instance) group_left(node)
+              label_replace(kube_node_info{<<.LabelMatchers>>}, "instance", "$1:9100", "internal_ip", "(.*)")
             )
           resources:
             overrides:
@@ -49,9 +51,9 @@ spec:
             )
           nodeQuery: |
             sum by (<<.GroupBy>>) (
-              avg_over_time(node_memory_MemTotal_bytes{<<.LabelMatchers>>}[3m])
-              -
-              avg_over_time(node_memory_MemAvailable_bytes{<<.LabelMatchers>>}[3m])
+              (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes)
+              * on(instance) group_left(node)
+              label_replace(kube_node_info{<<.LabelMatchers>>}, "instance", "$1:9100", "internal_ip", "(.*)")
             )
           resources:
             overrides:
