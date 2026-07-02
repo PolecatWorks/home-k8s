@@ -1,0 +1,27 @@
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: sward-warden-external
+  namespace: sward-warden-dev
+spec:
+  hosts:
+    - "sw-dev.polecatworks.com"
+  gateways:
+    - istio-ingress/polecatworks-gateway
+  http:
+    - name: sward-warden-be
+      match:
+        - uri:
+            prefix: /sward
+      route:
+        - destination:
+            host: sward-warden-be
+    - name: sward-warden-fe
+      match:
+        - uri:
+            prefix: /
+      route:
+        - destination:
+            host: sward-warden-fe-nginx-view
+
