@@ -20,7 +20,6 @@ This guide describes how to configure Cloudflare Tunnels (formerly Argo Tunnel) 
 4. Enter a name for your tunnel (e.g., `home-k8s-tunnel`) and click **Save tunnel**.
 
 ---
-
 ## Step 3: Retrieve the Tunnel Token
 
 Once the tunnel is created, Cloudflare will present you with command-line examples for installing the agent. 

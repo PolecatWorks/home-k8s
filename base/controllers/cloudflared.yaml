@@ -1,3 +1,5 @@
+# Provide a tunnel for accessing sward-warden-frontend/sward-web without a vpn.
+# See sward-warden-dev/cloudflare_setup_guide.md for instructions.
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -17,22 +19,22 @@ spec:
         app: cloudflared
     spec:
       containers:
-      - name: cloudflared
-        image: cloudflare/cloudflared:latest
-        args:
-        - tunnel
-        - --no-autoupdate
-        - run
-        env:
-        - name: TUNNEL_TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: cloudflared-token
-              key: token
-        resources:
-          limits:
-            cpu: "500m"
-            memory: "256Mi"
-          requests:
-            cpu: "100m"
-            memory: "128Mi"
+        - name: cloudflared
+          image: cloudflare/cloudflared:latest
+          args:
+            - tunnel
+            - --no-autoupdate
+            - run
+          env:
+            - name: TUNNEL_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: cloudflared-token
+                  key: token
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
