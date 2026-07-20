@@ -11,3 +11,4 @@ resources:
   - auth_receive_secrets_from_dbs
   - auth-keycloak.yaml
   - auth-master-realm-sa.yaml
+  - auth-sward-warden.yaml
