@@ -1,0 +1,47 @@
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: keycloak-sw-dev-sa
+  namespace: auth
+spec:
+  refreshInterval: 1h
+  refreshPolicy: CreatedOnce
+  target:
+    template:
+      data:
+        username: dev-admin-sa
+        password: "{{ .password }}"
+  dataFrom:
+    - sourceRef:
+        generatorRef:
+          apiVersion: generators.external-secrets.io/v1alpha1
+          kind: Password
+          name: keycloak-password
+---
+# Create a service account client in the auth ns to manage the dev realm
+apiVersion: v1.edp.epam.com/v1
+kind: KeycloakClient
+metadata:
+  name: sw-dev-admin-sa
+  namespace: auth
+spec:
+  clientId: sw-dev-admin-sa
+  name: SwardWarden Dev Admin Service Account
+  realmRef:
+    name: master
+    kind: KeycloakRealm
+  secret: $keycloak-sw-dev-sa:password
+  public: false
+  protocol: openid-connect
+  serviceAccount:
+    enabled: true
+    # realmRoles:
+    #   - manage-realm
+    clientRoles:
+      - clientId: sw-dev-realm
+        roles:
+          - manage-realm
+          - manage-clients
+          - manage-events
+          - manage-users
