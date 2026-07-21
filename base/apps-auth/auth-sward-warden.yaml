@@ -57,7 +57,7 @@ spec:
   updatePolicy: Replace # Pushes and overwrites immediately
   deletionPolicy: Delete # Deletes from provider when PushSecret is gone
   secretStoreRefs:
-    - name: push-secrets-to-sw-dev-ns
+    - name: push-secrets-to-sward-warden-dev-ns
       kind: SecretStore
   selector:
     secret:
