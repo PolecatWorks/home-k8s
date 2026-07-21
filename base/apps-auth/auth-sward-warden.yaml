@@ -10,7 +10,7 @@ spec:
   target:
     template:
       data:
-        username: dev-admin-sa
+        username: sw-dev-admin-sa
         password: "{{ .password }}"
   dataFrom:
     - sourceRef:
