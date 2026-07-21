@@ -45,3 +45,33 @@ spec:
           - manage-clients
           - manage-events
           - manage-users
+---
+# Push the realm cred to allow the dev namespace to use it
+apiVersion: external-secrets.io/v1alpha1
+kind: PushSecret
+metadata:
+  name: push-keycloak-sw-dev-sa-to-sw-dev-ns
+  namespace: auth
+spec:
+  refreshInterval: 1m0s
+  updatePolicy: Replace # Pushes and overwrites immediately
+  deletionPolicy: Delete # Deletes from provider when PushSecret is gone
+  secretStoreRefs:
+    - name: push-secrets-to-sw-dev-ns
+      kind: SecretStore
+  selector:
+    secret:
+      name: keycloak-sw-dev-sa # The source secret
+  # template:
+  #   type: kubernetes.io/dockerconfigjson
+  data:
+    - match:
+        secretKey: username # The source secret key
+        remoteRef:
+          remoteKey: keycloak-sw-dev-sa # name of the target secret
+          property: username # The key in the target secret
+    - match:
+        secretKey: password
+        remoteRef:
+          remoteKey: keycloak-sw-dev-sa # Must match the one above to put both in one secret
+          property: password
