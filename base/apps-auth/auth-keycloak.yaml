@@ -62,6 +62,7 @@ spec:
       - "start"
       - "--http-port=8080"
       - "--hostname-strict=false"
+      - "--proxy-headers=xforwarded"
       - "--spi-events-listener-jboss-logging-success-level=info"
       - "--spi-events-listener-jboss-logging-error-level=warn"
     dbchecker:
