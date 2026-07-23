@@ -10,6 +10,20 @@ spec:
   gateways:
     - istio-ingress/polecatworks-gateway
   http:
+    - name: keycloak
+      match:
+        - uri:
+            prefix: /auth
+      headers:
+        request:
+          set:
+            x-forwarded-proto: "https"
+            x-forwarded-port: "443"
+      route:
+        - destination:
+            host: keycloak-keycloakx-http.auth.svc.cluster.local
+            port:
+              number: 80
     - name: sward-warden-be
       match:
         - uri:
@@ -24,4 +38,5 @@ spec:
       route:
         - destination:
             host: sward-warden-fe-nginx-view
+
 
