@@ -1,12 +1,12 @@
-# Technical Specifications (Specs)
+# Task Specifications (Specs)
 
-This directory contains technical build specifications derived from PRDs, detailing verification strategies, manifests, schemas, and implementation criteria.
+This directory contains task-specific, ephemeral build specifications. Specs are authored only when a specific change or implementation task is planned, defining the planned deltas, affected manifests/schemas, execution order, and verification criteria.
 
 ## Lifecycle Status
 - **`draft`**: Spec is actively being authored or refined prior to implementation.
-- **`complete`**: Spec is fully implemented and verified.
-- **`deprecated`**: Spec has been superseded by a newer specification.
+- **`complete`**: Task implementation and verification are complete.
+- **`deprecated`**: Spec has been superseded by a newer task specification.
 
-## Index
+## Active & Historical Task Specs
 
-*No specs created yet.*
+*No active task specs. Task specs are generated on-demand when a change is planned.*
