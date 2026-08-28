@@ -67,3 +67,4 @@ flowchart LR
 * [001-gitops-core-architecture-prd.md](./001-gitops-core-architecture-prd.md)
 * [004-identity-and-secret-distribution-prd.md](./004-identity-and-secret-distribution-prd.md)
 * [006-workloads-ai-and-ephemeral-environments-prd.md](./006-workloads-ai-and-ephemeral-environments-prd.md)
+* [007-agent-as-data-workload-prd.md](./007-agent-as-data-workload-prd.md)

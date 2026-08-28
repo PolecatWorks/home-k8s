@@ -72,3 +72,4 @@ flowchart TD
 * [003-networking-service-mesh-and-ingress-prd.md](./003-networking-service-mesh-and-ingress-prd.md)
 * [004-identity-and-secret-distribution-prd.md](./004-identity-and-secret-distribution-prd.md)
 * [005-data-persistence-and-streaming-prd.md](./005-data-persistence-and-streaming-prd.md)
+* [007-agent-as-data-workload-prd.md](./007-agent-as-data-workload-prd.md)

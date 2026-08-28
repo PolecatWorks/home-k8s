@@ -55,6 +55,7 @@ flowchart TD
   * `db0-angry-agent-user`
   * `db0-recon-user`
   * `db0-sward-warden-user`
+  * `db0-agent-as-data-user`
 * **Automated Credential Generation**: Passwords generated and stored automatically in Kubernetes secrets and synced via ESO.
 
 ### 3.2 Confluent Kafka Event Streaming
@@ -74,3 +75,4 @@ flowchart TD
 * [001-gitops-core-architecture-prd.md](./001-gitops-core-architecture-prd.md)
 * [004-identity-and-secret-distribution-prd.md](./004-identity-and-secret-distribution-prd.md)
 * [006-workloads-ai-and-ephemeral-environments-prd.md](./006-workloads-ai-and-ephemeral-environments-prd.md)
+* [007-agent-as-data-workload-prd.md](./007-agent-as-data-workload-prd.md)
