@@ -82,3 +82,4 @@ The repository separates bootstrap manifests, operator charts, shared infrastruc
 * [004-identity-and-secret-distribution-prd.md](./004-identity-and-secret-distribution-prd.md)
 * [005-data-persistence-and-streaming-prd.md](./005-data-persistence-and-streaming-prd.md)
 * [006-workloads-ai-and-ephemeral-environments-prd.md](./006-workloads-ai-and-ephemeral-environments-prd.md)
+* [007-agent-as-data-workload-prd.md](./007-agent-as-data-workload-prd.md)

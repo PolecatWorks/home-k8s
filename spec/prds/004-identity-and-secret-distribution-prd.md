@@ -66,3 +66,4 @@ flowchart TD
 * [001-gitops-core-architecture-prd.md](./001-gitops-core-architecture-prd.md)
 * [005-data-persistence-and-streaming-prd.md](./005-data-persistence-and-streaming-prd.md)
 * [006-workloads-ai-and-ephemeral-environments-prd.md](./006-workloads-ai-and-ephemeral-environments-prd.md)
+* [007-agent-as-data-workload-prd.md](./007-agent-as-data-workload-prd.md)
