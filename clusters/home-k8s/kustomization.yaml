@@ -8,3 +8,4 @@ resources:
   - apps-auth.yaml
   - apps-dev.yaml
   - sward-warden-dev.yaml
+  - agent-as-data-dev.yaml

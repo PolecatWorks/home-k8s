@@ -9,4 +9,6 @@ This directory contains task-specific, ephemeral build specifications. Specs are
 
 ## Active & Historical Task Specs
 
-*No active task specs. Task specs are generated on-demand when a change is planned.*
+| Spec | Title | Status | Description |
+|---|---|---|---|
+| [001-agent-as-data-deployment-spec.md](./001-agent-as-data-deployment-spec.md) | Agent-As-Data (AAD) Workload Deployment & PostgreSQL Integration | `complete` | Deploy agent-as-data via Flux CD v2 with CNPG PostgreSQL + pgvector persistence, ESO PushSecrets, and local-only ingress. |
