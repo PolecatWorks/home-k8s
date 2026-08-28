@@ -1,0 +1,73 @@
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: keycloak-aad-dev-sa
+  namespace: auth
+spec:
+  refreshInterval: 1h
+  refreshPolicy: CreatedOnce
+  target:
+    template:
+      data:
+        username: aad-dev-admin-sa
+        password: "{{ .password }}"
+  dataFrom:
+    - sourceRef:
+        generatorRef:
+          apiVersion: generators.external-secrets.io/v1alpha1
+          kind: Password
+          name: keycloak-password
+---
+# Create a service account client in the auth ns to manage the dev realm
+apiVersion: v1.edp.epam.com/v1
+kind: KeycloakClient
+metadata:
+  name: aad-dev-admin-sa
+  namespace: auth
+spec:
+  clientId: aad-dev-admin-sa
+  name: AgentAsData Dev Admin Service Account
+  realmRef:
+    name: master
+    kind: KeycloakRealm
+  secret: $keycloak-aad-dev-sa:password
+  public: false
+  protocol: openid-connect
+  serviceAccount:
+    enabled: true
+    clientRoles:
+      - clientId: aad-dev-realm
+        roles:
+          - manage-realm
+          - manage-clients
+          - manage-events
+          - manage-users
+---
+# Push the realm cred to allow the dev namespace to use it
+apiVersion: external-secrets.io/v1alpha1
+kind: PushSecret
+metadata:
+  name: push-keycloak-aad-dev-sa-to-aad-dev-ns
+  namespace: auth
+spec:
+  refreshInterval: 1m0s
+  updatePolicy: Replace # Pushes and overwrites immediately
+  deletionPolicy: Delete # Deletes from provider when PushSecret is gone
+  secretStoreRefs:
+    - name: push-secrets-to-agent-as-data-dev-ns
+      kind: SecretStore
+  selector:
+    secret:
+      name: keycloak-aad-dev-sa # The source secret
+  data:
+    - match:
+        secretKey: username # The source secret key
+        remoteRef:
+          remoteKey: keycloak-aad-dev-sa # name of the target secret
+          property: username # The key in the target secret
+    - match:
+        secretKey: password
+        remoteRef:
+          remoteKey: keycloak-aad-dev-sa # Must match the one above to put both in one secret
+          property: password

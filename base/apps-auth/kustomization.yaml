@@ -12,3 +12,4 @@ resources:
   - auth-keycloak.yaml
   - auth-master-realm-sa.yaml
   - auth-sward-warden.yaml
+  - auth-agent-as-data.yaml

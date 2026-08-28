@@ -1,0 +1,16 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+metadata:
+  name: agent-as-data-dev-send_push_secrets
+resources:
+  - ../../eso_send_push_secrets.yaml
+namespace: dbs
+nameSuffix: -agent-as-data-dev-ns
+patches:
+  - target:
+      kind: SecretStore
+    patch: |
+      - op: replace
+        path: /spec/provider/kubernetes/remoteNamespace
+        value: agent-as-data-dev

@@ -140,6 +140,14 @@ spec:
           superuser: false
           passwordSecret:
             name: db0-sward-warden-user
+
+        - name: db0_agent_as_data
+          ensure: present
+          comment: Agent As Data DB user
+          login: true
+          superuser: false
+          passwordSecret:
+            name: db0-agent-as-data-user
     databases:
       - name: keycloak
         owner: db0_keycloak
@@ -157,3 +165,7 @@ spec:
         owner: db0_sward_warden
         extensions:
           - name: postgis
+      - name: agent_as_data
+        owner: db0_agent_as_data
+        extensions:
+          - name: vector
