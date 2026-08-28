@@ -54,3 +54,21 @@ spec:
       enabled: true
       # storageClass: longhorn-single
       size: 30Gi
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: ollama
+  namespace: ollama
+spec:
+  hosts:
+    - ollama.k8s
+  gateways:
+    - istio-ingress/k8s-gateway
+    - mesh # applies to all the sidecars in the mesh
+  http:
+    - route:
+        - destination:
+            host: ollama.ollama.svc.cluster.local
+            port:
+              number: 11434
