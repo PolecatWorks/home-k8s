@@ -148,6 +148,22 @@ spec:
           superuser: false
           passwordSecret:
             name: db0-agent-as-data-user
+
+        - name: db0_graphrag
+          ensure: present
+          comment: Graphrag DB user
+          login: true
+          superuser: false
+          passwordSecret:
+            name: db0-graphrag-user
+
+        - name: db0_data_engine
+          ensure: present
+          comment: Data Engine DB user
+          login: true
+          superuser: false
+          passwordSecret:
+            name: db0-data-engine-user
     databases:
       - name: keycloak
         owner: db0_keycloak
@@ -167,5 +183,13 @@ spec:
           - name: postgis
       - name: agent_as_data
         owner: db0_agent_as_data
+        extensions:
+          - name: vector
+      - name: graphrag
+        owner: db0_graphrag
+        extensions:
+          - name: vector
+      - name: data_engine
+        owner: db0_data_engine
         extensions:
           - name: vector
