@@ -130,7 +130,25 @@ spec:
   - istio-ingress/polecatworks-gateway
   - mesh # applies to all the sidecars in the mesh
   http:
-  - route:
+  - corsPolicy:
+      allowOrigins:
+      - exact: http://aad.k8s
+      - exact: https://aad.k8s
+      - exact: http://ai.k8s
+      - exact: https://ai.k8s
+      - exact: http://agent-as-data.k8s
+      - exact: https://agent-as-data.k8s
+      - exact: http://localhost:4200
+      allowMethods:
+      - GET
+      - POST
+      - OPTIONS
+      allowHeaders:
+      - authorization
+      - content-type
+      - x-requested-with
+      allowCredentials: true
+    route:
     - destination:
         host: keycloak-keycloakx-http.auth.svc.cluster.local
         port:
