@@ -23,3 +23,12 @@ spec:
   sourceRef:
     kind: GitRepository
     name: mfe-shell
+  patches:
+    - target:
+        kind: VirtualService
+        name: mfe-shell
+      patch: |-
+        - op: replace
+          path: /spec/hosts
+          value:
+            - ai.k8s
