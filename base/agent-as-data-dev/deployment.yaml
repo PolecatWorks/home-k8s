@@ -108,3 +108,30 @@ spec:
   sourceRef:
     kind: GitRepository
     name: graphrag
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: mfe-shell
+  namespace: agent-as-data-dev
+spec:
+  interval: 1m0s
+  url: https://github.com/PolecatWorks/Mfe-shell.git
+  secretRef:
+    name: aad-gh-pat
+  ref:
+    branch: main
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: mfe-shell
+  namespace: agent-as-data-dev
+spec:
+  interval: 10m0s
+  path: ./fluxcd-dev
+  targetNamespace: agent-as-data-dev
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: mfe-shell
